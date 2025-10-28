@@ -16,9 +16,9 @@ Here are a few pre-built filesystem backends that you can quickly use with your 
     The default filesystem backend for an agent is stored in langgraph state. Note that this filesystem only persists _for a single thread_.
 - **Local filesystem persistence**
 
-    `agent = create_deep_agent(backend=FilesystemBackend(root_dir="."))`
+    `agent = create_deep_agent(backend=FilesystemBackend(root_dir="/Users/nh/Desktop/"))`
 
-    This gives the deep agent access to your local machine's filesystem. You can specify the root directory that the agent has access to.
+    This gives the deep agent access to your local machine's filesystem. You can specify the root directory that the agent has access to. Note that any provided `root_dir` must be an absolute path.
 - **Durable store (LangGraph Store)**
 
     `agent = create_deep_agent(backend=lambda rt: StoreBackend(rt))`
@@ -56,11 +56,12 @@ agent = create_deep_agent(
 from deepagents.backends import FilesystemBackend
 
 agent = create_deep_agent(
-    backend=FilesystemBackend(root_dir=".")
+    backend=FilesystemBackend(root_dir="/Users/nh/Desktop/")
 )
 ```
 **How it works:**
 - Reads/writes real files under a configurable `root_dir`.
+- Note: `root_dir` must be an absolute path.
 - You can optionally set `virtual_mode=True` to sandbox and normalize paths under `root_dir`.
 - Uses secure path resolution, prevents unsafe symlink traversal when possible, can use ripgrep for fast `grep`.
 
@@ -132,7 +133,7 @@ from deepagents.backends.composite import build_composite_state_backend
 
 composite_backend = lambda rt: CompositeBackend(
     routes={
-        "/memories/": FilesystemBackend(root_dir="~/.deepagents/myagent"),
+        "/memories/": FilesystemBackend(root_dir="/deepagents/myagent"),
     },
 )
 
@@ -142,7 +143,7 @@ agent = create_deep_agent(backend=composite_backend)
 
 Behavior:
 - `/workspace/plan.md` → StateBackend (ephemeral)
-- `/memories/agent.md` → FilesystemBackend under `~/.deepagents/myagent`
+- `/memories/agent.md` → FilesystemBackend under `/deepagents/myagent`
 - `ls`, `glob`, `grep` aggregate results and show original path prefixes.
 
 Notes:
