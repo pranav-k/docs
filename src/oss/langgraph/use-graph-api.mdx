@@ -246,7 +246,7 @@ ai: Hello!
 Each key in the state can have its own independent [reducer](/oss/langgraph/graph-api#reducers) function, which controls how updates from nodes are applied. If no reducer function is explicitly specified then it is assumed that all updates to the key should override it.
 
 :::python
-For `TypedDict` state schemas, we can define reducers by annotating tuvhe corresponding field of the state with a reducer function.
+For `TypedDict` state schemas, we can define reducers by annotating the corresponding field of the state with a reducer function.
 
 In the earlier example, our node updated the `"messages"` key in the state by appending a message to it. Below, we add a reducer to this key, such that updates are automatically appended:
 
@@ -494,7 +494,7 @@ def replace_messages(state: State):
 ```
 
 <Warning>
-When nodes execute in parallel, only one node can use `Overwrite` on the same state key in a given super-step. If multiple nodes attempt to overwrite the same key simultaneously, an `InvalidUpdateError` will be raised.
+When nodes execute in parallel, only one node can use `Overwrite` on the same state key in a given super-step. If multiple nodes attempt to overwrite the same key in the same super-step, an `InvalidUpdateError` will be raised.
 </Warning>
 :::
 
