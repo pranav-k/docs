@@ -1512,7 +1512,7 @@
     },
     {
       "source": "/langgraph-platform/deployment-options",
-      "destination": "/langsmith/hosting"
+      "destination": "/langsmith/platform-setup"
     },
     {
       "source": "/langgraph-platform/langgraph-studio",
