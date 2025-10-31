@@ -17,10 +17,10 @@ By default, LangSmith displays outputs in a standard JSON format. With custom ou
 
 This is particularly useful for:
 
-- **Domain-specific formatting**: Display medical records, legal documents, or other specialized data types in their native format
-- **Custom visualizations**: Create charts, graphs, or diagrams from numeric or structured output data
+- **Domain-specific formatting**: Display medical records, legal documents, or other specialized data types in their native format.
+- **Custom visualizations**: Create charts, graphs, or diagrams from numeric or structured output data.
 
-Custom rendering is configured per-[_dataset_](/langsmith/evaluation-concepts#datasets). 
+Custom rendering is configured per-[_dataset_](/langsmith/evaluation-concepts#datasets).
 
 ## Prerequisites
 
@@ -38,12 +38,12 @@ To configure custom output rendering for a dataset:
 
 ![Dataset page with three-dot menu showing Custom Output Rendering option](/langsmith/images/custom-output-rendering-menu.png)
 
-1. Navigate to your dataset in the **Datasets & Experiments** page
-2. Click **⋮** (three-dot menu) in the top right corner
-3. Select **Custom Output Rendering**
+1. Navigate to your dataset in the **Datasets & Experiments** page.
+2. Click **⋮** (three-dot menu) in the top right corner.
+3. Select **Custom Output Rendering**.
 4. Toggle **Enable custom output rendering**.
 5. Enter the webpage URL in the **URL** field.
-6. Click **Save**
+6. Click **Save**.
 
 ![Custom Output Rendering modal with fields filled in](/langsmith/images/custom-output-rendering-modal.png)
 
@@ -108,9 +108,9 @@ Your HTML page will receive output data via the [postMessage API](https://develo
 }
 ```
 
-- `type`: Indicates whether this is an actual output (`"output"`) or a reference output (`"reference"`)
-- `data`: The output data itself
-- `metadata.inputs`: The input data that generated this output, provided for context
+- `type`: Indicates whether this is an actual output (`"output"`) or a reference output (`"reference"`).
+- `data`: The output data itself.
+- `metadata.inputs`: The input data that generated this output, provided for context.
 
 <Note>
 **Message delivery timing**: LangSmith uses an exponential backoff retry mechanism to ensure your page receives the data even if it loads slowly. Messages are sent up to 6 times with increasing delays (100ms, 200ms, 400ms, 800ms, 1600ms, 3200ms).
@@ -118,7 +118,7 @@ Your HTML page will receive output data via the [postMessage API](https://develo
 
 ### Example implementation
 
-Here's a minimal example that displays all received messages:
+This example listens for incoming postMessage events and displays them on the page. Each message is numbered and formatted as JSON, making it easy to inspect the data structure LangSmith sends to your renderer.
 
 ```html
 <!DOCTYPE html>
@@ -166,5 +166,3 @@ When enabled, your custom rendering will replace the default output view in:
 - **Annotation queues**: When experiments are added to annotation queues for review:
 
 ![Annotation queue showing custom rendering](/langsmith/images/custom-output-rendering-annotation-queue.png)
-
-Custom rendering only applies when viewing in "pretty" mode. Users can still toggle to "raw" mode to see the original JSON.
