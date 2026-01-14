@@ -12,8 +12,8 @@ All document loaders implement the [`BaseLoader`](https://reference.langchain.co
 
 Each document loader may define its own parameters, but they share a common API:
 
-* `.load()` – Loads all documents at once.
-* `.lazy_load()` – Streams documents lazily, useful for large datasets.
+* `load()` – Loads all documents at once.
+* `lazy_load()` – Streams documents lazily, useful for large datasets.
 
 ```python
 from langchain_community.document_loaders.csv_loader import CSVLoader
@@ -70,7 +70,7 @@ The below document loaders allow you to load PDF documents.
 | [OpenDataLoader PDF](/oss/python/integrations/document_loaders/opendataloader_pdf) | Load PDF files using OpenDataLoader PDF | Package |
 
 
-### Cloud Providers
+### Cloud providers
 
 The below document loaders allow you to load documents from your favorite cloud providers.
 
@@ -92,7 +92,7 @@ The below document loaders allow you to load documents from your favorite cloud 
 | [Tencent COS File](/oss/python/integrations/document_loaders/tencent_cos_file) | Load documents from Tencent Cloud Object Storage File | ❌ | [`TencentCOSFileLoader`](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.tencent_cos_file.TencentCOSFileLoader.html) |
 
 
-### Social Platforms
+### Social platforms
 
 The below document loaders allow you to load documents from different social media platforms.
 
@@ -102,7 +102,7 @@ The below document loaders allow you to load documents from different social med
 | [Reddit](/oss/python/integrations/document_loaders/reddit) | [`RedditPostsLoader`](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.reddit.RedditPostsLoader.html) |
 
 
-### Messaging Services
+### Messaging services
 
 The below document loaders allow you to load data from different messaging platforms.
 
@@ -128,18 +128,18 @@ The below document loaders allow you to load data from commonly used productivit
 | [Roam](/oss/python/integrations/document_loaders/roam) | [`RoamLoader`](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.roam.RoamLoader.html) |
 | [GitHub](/oss/python/integrations/document_loaders/github) | [`GithubFileLoader`](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.github.GithubFileLoader.html) |
 
-### Common File Types
+### Common file types
 
 The below document loaders allow you to load data from common data formats.
 
 | Document Loader | Data Type |
 |----------------|-----------|
-| [CSVLoader](/oss/python/integrations/document_loaders/csv) | CSV files |
-| [Unstructured](/oss/python/integrations/document_loaders/unstructured_file) | Many file types (see https://docs.unstructured.io/platform/supported-file-types) |
-| [JSONLoader](/oss/python/integrations/document_loaders/json) | JSON files |
-| [BSHTMLLoader](/oss/python/integrations/document_loaders/bshtml) | HTML files |
-| [DoclingLoader](/oss/python/integrations/document_loaders/docling) | Various file types (see https://ds4sd.github.io/docling/) |
-| [PolarisAIDataInsightLoader](/oss/python/integrations/document_loaders/polaris_ai_datainsight) | Various file types (see https://datainsight.polarisoffice.com/documentation?docType=doc_extract) |
+| [`CSVLoader`](/oss/python/integrations/document_loaders/csv) | CSV files |
+| [`Unstructured`](/oss/python/integrations/document_loaders/unstructured_file) | Many file types (see https://docs.unstructured.io/platform/supported-file-types) |
+| [`JSONLoader`](/oss/python/integrations/document_loaders/json) | JSON files |
+| [`BSHTMLLoader`](/oss/python/integrations/document_loaders/bshtml) | HTML files |
+| [`DoclingLoader`](/oss/python/integrations/document_loaders/docling) | Various file types (see https://ds4sd.github.io/docling/) |
+| [`PolarisAIDataInsightLoader`](/oss/python/integrations/document_loaders/polaris_ai_datainsight) | Various file types (see https://datainsight.polarisoffice.com/documentation?docType=doc_extract) |
 
 
 ## All document loaders
@@ -335,8 +335,8 @@ The below document loaders allow you to load data from common data formats.
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/document_loaders/index.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/document_loaders/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

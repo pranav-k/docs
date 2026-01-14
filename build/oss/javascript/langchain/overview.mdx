@@ -1,46 +1,14 @@
 ---
 title: LangChain overview
 sidebarTitle: Overview
+description: LangChain is an open source framework with a pre-built agent architecture and integrations for any model or tool — so you can build agents that adapt as fast as the ecosystem evolves
 ---
-
-
-
-<Callout icon="bullhorn" color="#DFC5FE" iconType="regular">
-    **LangChain v1.0 is now available!**
-
-    For a complete list of changes and instructions on how to upgrade your code, see the [release notes](/oss/javascript/releases/langchain-v1) and [migration guide](/oss/javascript/migrate/langchain-v1).
-
-    If you encounter any issues or have feedback, please [open an issue](https://github.com/langchain-ai/docs/issues/new?template=01-langchain.yml) so we can improve. To view v0.x documentation, [go to the archived content](https://github.com/langchain-ai/langchainjs/tree/v0.3/docs/core_docs/docs).
-</Callout>
-
 
 LangChain is the easiest way to start building agents and applications powered by LLMs. With under 10 lines of code, you can connect to OpenAI, Anthropic, Google, and [more](/oss/javascript/integrations/providers/overview). LangChain provides a pre-built agent architecture and model integrations to help you get started quickly and seamlessly incorporate LLMs into your agents and applications.
 
 We recommend you use LangChain if you want to quickly build agents and autonomous applications. Use [LangGraph](/oss/javascript/langgraph/overview), our low-level agent orchestration framework and runtime, when you have more advanced needs that require a combination of deterministic and agentic workflows, heavy customization, and carefully controlled latency.
 
 LangChain [agents](/oss/javascript/langchain/agents) are built on top of LangGraph in order to provide durable execution, streaming, human-in-the-loop, persistence, and more. You do not need to know LangGraph for basic LangChain agent usage.
-
-## <Icon icon="download" size={20} /> Install
-
-
-<CodeGroup>
-```bash npm
-npm install langchain @langchain/core
-```
-
-```bash pnpm
-pnpm add langchain @langchain/core
-```
-
-```bash yarn
-yarn add langchain @langchain/core
-```
-
-```bash bun
-bun add langchain @langchain/core
-```
-</CodeGroup>
-
 
 ## <Icon icon="wand-magic-sparkles" /> Create an agent
 
@@ -75,8 +43,9 @@ console.log(
 ```
 
 
+See the [Installation instructions](/oss/javascript/langchain/install) and [Quickstart guide](/oss/javascript/langchain/quickstart) to get started building your own agents and applications with LangChain.
 
-## <Icon icon="star" size={20} /> Core benefits
+## <Icon icon="star" size={20} /> core benefits
 
 <Columns cols={2}>
     <Card title="Standard model interface" icon="arrows-rotate" href="/oss/javascript/langchain/models" arrow cta="Learn more">
@@ -99,8 +68,8 @@ console.log(
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/overview.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

@@ -24,7 +24,7 @@ The parameters allowed in `langchain-anchorbrowser` are only a subset of those l
 
 **Info:** Anchor currently implements `SimpleAnchorWebTaskTool` and `AdvancedAnchorWebTaskTool` tools for langchain with `browser_use` agent. For
 
-#### AnchorWebTaskToolKit Tools
+#### AnchorWebTaskToolKit tools
 
 The difference between each tool in this toolkit is the pydantic configuration structure.
 
@@ -178,18 +178,20 @@ def tool_chain(user_input: str, config: RunnableConfig):
 tool_chain.invoke(input())
 ```
 
+---
+
 ## API reference
 
 - [PyPi](https://pypi.org/project/langchain-anchorbrowser)
-- [Github](https://github.com/anchorbrowser/langchain-anchorbrowser)
+- [GitHub](https://github.com/anchorbrowser/langchain-anchorbrowser)
 - [Anchor Browser Docs](https://docs.anchorbrowser.io/introduction?utm=langchain)
 - [Anchor Browser API Reference](https://docs.anchorbrowser.io/api-reference/ai-tools/perform-web-task?utm=langchain)
 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/anchor_browser.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/anchor_browser.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

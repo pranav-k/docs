@@ -2,17 +2,27 @@
 title: Quickstart
 ---
 
-
-
 This quickstart takes you from a simple setup to a fully functional AI agent in just a few minutes.
+
+<Tip>
+    **LangChain Docs MCP server**
+
+    If you're using an AI coding assistant or IDE (e.g. Claude Code or Cursor), you should install the [LangChain Docs MCP server](/use-these-docs) to get the most out of it. This ensures your agent has access to up-to-date LangChain documentation and examples.
+</Tip>
+
+## Requirements
+
+For these examples, you will need to:
+
+* [Install](/oss/python/langchain/install) the LangChain package
+* Set up a [Claude (Anthropic)](https://www.anthropic.com/) account and get an API key
+* Set the `ANTHROPIC_API_KEY` environment variable in your terminal
+
+Although these examples use Claude, you can use [any supported model](/oss/python/integrations/providers/overview) by changing the model name in the code and setting up the appropriate API key.
 
 ## Build a basic agent
 
 Start by creating a simple agent that can answer questions and call tools. The agent will use Claude Sonnet 4.5 as its language model, a basic weather function as a tool, and a simple prompt to guide its behavior.
-
-<Info>
-    For this example, you will need to set up a [Claude (Anthropic)](https://www.anthropic.com/) account and get an API key. Then, set the `ANTHROPIC_API_KEY` environment variable in your terminal.
-</Info>
 
 ```python
 from langchain.agents import create_agent
@@ -107,7 +117,7 @@ Let's walk through each step:
 
     </Step>
     <Step title="Configure your model">
-        Set up your [language model](/oss/python/langchain/models) with the right [parameters](/oss/python/langchain/models#parameters) for your use case:
+        Set up your [language model](/oss/python/langchain/models) with the right parameters for your use case:
 
         ```python
         from langchain.chat_models import init_chat_model
@@ -122,6 +132,8 @@ Let's walk through each step:
 
 
 
+
+        Depending on the model and provider chosen, initialization parameters may vary; refer to their reference pages for details.
     </Step>
     <Step title="Define response format">
         Optionally, define a structured response format if you need the agent responses to match
@@ -165,12 +177,14 @@ Let's walk through each step:
         Now assemble your agent with all the components and run it!
 
         ```python
+        from langchain.agents.structured_output import ToolStrategy
+
         agent = create_agent(
             model=model,
             system_prompt=SYSTEM_PROMPT,
             tools=[get_user_location, get_weather_for_location],
             context_schema=Context,
-            response_format=ResponseFormat,
+            response_format=ToolStrategy(ResponseFormat),
             checkpointer=checkpointer
         )
 
@@ -216,6 +230,7 @@ from langchain.agents import create_agent
 from langchain.chat_models import init_chat_model
 from langchain.tools import tool, ToolRuntime
 from langgraph.checkpoint.memory import InMemorySaver
+from langchain.agents.structured_output import ToolStrategy
 
 
 # Define system prompt
@@ -270,7 +285,7 @@ agent = create_agent(
     system_prompt=SYSTEM_PROMPT,
     tools=[get_user_location, get_weather_for_location],
     context_schema=Context,
-    response_format=ResponseFormat,
+    response_format=ToolStrategy(ResponseFormat),
     checkpointer=checkpointer
 )
 
@@ -325,8 +340,8 @@ Congratulations! You now have an AI agent that can:
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/quickstart.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

@@ -1,6 +1,6 @@
 ---
-title: What's new in v1
-sidebarTitle: Release notes
+title: What's new in LangChain v1
+sidebarTitle: LangChain v1
 ---
 
 **LangChain v1 is a focused, production-ready foundation for building agents.** We've streamlined the framework around three core improvements:
@@ -32,7 +32,7 @@ For a complete list of changes, see the [migration guide](/oss/python/migrate/la
 
 ## `create_agent`
 
-[`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) is the standard way to build agents in LangChain 1.0. It provides a simpler interface than [`langgraph.prebuilt.create_react_agent`](https://reference.langchain.com/python/langgraph/prebuilt/#langgraph.prebuilt.chat_agent_executor.create_react_agent) while offering greater customization potential by using [middleware](#middleware).
+[`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) is the standard way to build agents in LangChain 1.0. It provides a simpler interface than [`langgraph.prebuilt.create_react_agent`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.chat_agent_executor.create_react_agent) while offering greater customization potential by using [middleware](#middleware).
 
 ```python
 from langchain.agents import create_agent
@@ -101,7 +101,7 @@ agent = create_agent(
         ),
         SummarizationMiddleware(
             model="claude-sonnet-4-5-20250929",
-            max_tokens_before_summary=500
+            trigger={"tokens": 500}
         ),
         HumanInTheLoopMiddleware(
             interrupt_on={
@@ -173,9 +173,7 @@ class ExpertiseBasedToolMiddleware(AgentMiddleware):
             model = ChatOpenAI(model="gpt-5-nano")
             tools = [simple_search, basic_calculator]
 
-        request.model = model
-        request.tools = tools
-        return handler(request)
+        return handler(request.override(model=model, tools=tools))
 
 agent = create_agent(
     model="claude-sonnet-4-5-20250929",
@@ -306,8 +304,8 @@ LangChain v1 streamlines the [`langchain`](https://pypi.org/project/langchain/) 
 | Module | What's available | Notes |
 |--------|------------------|-------|
 | [`langchain.agents`](https://reference.langchain.com/python/langchain/agents) | [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent), [`AgentState`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.AgentState) | Core agent creation functionality |
-| [`langchain.messages`](https://reference.langchain.com/python/langchain/messages) | Message types, [content blocks](https://reference.langchain.com/python/langchain/messages/#langchain.messages.ContentBlock), [`trim_messages`](https://reference.langchain.com/python/langchain/messages/#langchain.messages.trim_messages) | Re-exported from @[`langchain-core`] |
-| [`langchain.tools`](https://reference.langchain.com/python/langchain/tools) | [`@tool`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.tool), [`BaseTool`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.BaseTool), injection helpers | Re-exported from @[`langchain-core`] |
+| [`langchain.messages`](https://reference.langchain.com/python/langchain/messages) | Message types, [content blocks](https://reference.langchain.com/python/langchain/messages/#langchain.messages.ContentBlock), [`trim_messages`](https://reference.langchain.com/python/langchain/messages/#langchain.messages.trim_messages) | Re-exported from [`langchain-core`](https://reference.langchain.com/python/langchain_core/) |
+| [`langchain.tools`](https://reference.langchain.com/python/langchain/tools) | [`@tool`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.tool), [`BaseTool`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.BaseTool), injection helpers | Re-exported from [`langchain-core`](https://reference.langchain.com/python/langchain_core/) |
 | [`langchain.chat_models`](https://reference.langchain.com/python/langchain/models) | [`init_chat_model`](https://reference.langchain.com/python/langchain/models/#langchain.chat_models.init_chat_model), [`BaseChatModel`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel) | Unified model initialization |
 | [`langchain.embeddings`](https://reference.langchain.com/python/langchain/embeddings) | [`Embeddings`](https://reference.langchain.com/python/langchain_core/embeddings/#langchain_core.embeddings.embeddings.Embeddings), [`init_embeddings`](https://reference.langchain.com/python/langchain_core/embeddings/#langchain_core.embeddings.embeddings.Embeddings) | Embedding models |
 
@@ -383,7 +381,7 @@ Please report any issues discovered with 1.0 on [GitHub](https://github.com/lang
     <Card title="LangChain 1.0" icon="rocket" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
         Read the announcement
     </Card>
-    <Card title="Middleware Guide" icon="puzzle-piece" href="https://blog.langchain.com/agent-middleware/">
+    <Card title="Middleware guide" icon="puzzle-piece" href="https://blog.langchain.com/agent-middleware/">
         Deep dive into middleware
     </Card>
     <Card title="Agents Documentation" icon="book" href="/oss/python/langchain/agents" arrow>
@@ -402,14 +400,14 @@ Please report any issues discovered with 1.0 on [GitHub](https://github.com/lang
 
 ## See also
 
-- [Versioning](/oss/python/versioning) - Understanding version numbers
-- [Release policy](/oss/python/release-policy) - Detailed release policies
+- [Versioning](/oss/python/versioning) – Understanding version numbers
+- [Release policy](/oss/python/release-policy) – Detailed release policies
 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/releases/langchain-v1.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/releases/langchain-v1.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

@@ -30,7 +30,7 @@ def evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
     ...
 ```
 
-See the [langchain](https://python.langchain.com/docs/how_to/chat_model_rate_limiting/) documentation for more on how to configure rate limiters.
+See the [`langchain`](/oss/python/langchain/models#rate-limiting) documentation for more on how to configure rate limiters.
 
 ## Retrying with exponential backoff
 
@@ -60,7 +60,7 @@ const modelWithRetry = model.withRetry({ stopAfterAttept: 2 });
 
 </CodeGroup>
 
-See the `langchain` [Python](https://python.langchain.com/api_reference/core/language_models/langchain_core.language_models.chat_models.BaseChatModel.html#langchain_core.language_models.chat_models.BaseChatModel.with_retry) and [JS](https://v03.api.js.langchain.com/classes/_langchain_core.language_models_chat_models.BaseChatModel.html#withRetry) API references for more.
+See the `langchain` [Python](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.BaseChatModel.with_retry) and [JS](https://v03.api.js.langchain.com/classes/_langchain_core.language_models_chat_models.BaseChatModel.html#withRetry) API references for more.
 
 #### Without `langchain`
 
@@ -95,8 +95,8 @@ await evaluate(..., {
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/langsmith/rate-limiting.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/rate-limiting.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

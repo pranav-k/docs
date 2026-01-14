@@ -94,7 +94,7 @@ const props = {
 const instance = new WatsonxLLM(props);
 ```
 
-If you want to get automated tracing from individual queries, you can also set your [LangSmith](https://docs.smith.langchain.com/) API key by uncommenting below:
+If you want to get automated tracing from individual queries, you can also set your [LangSmith](https://docs.langchain.com/langsmith/home) API key by uncommenting below:
 
 ```typescript
 // process.env.LANGSMITH_API_KEY = "<YOUR API KEY HERE>";
@@ -166,7 +166,7 @@ const result = await vectorStoreRetriever.invoke(query);
 console.log(result);
 ```
 
-```output
+```javascript
 [
   Document {
     pageContent: 'And I did that 4 days ago, when I nominated Circuit Court of Appeals Judge Ketanji Brown Jackson. One of our nation’s top legal minds, who will continue Justice Breyer’s legacy of excellence.',
@@ -218,7 +218,7 @@ const compressed = await reranker.rerank(result, query);
 console.log(compressed);
 ```
 
-```output
+```text
 [
   { index: 0, relevanceScore: 0.726995587348938 },
   { index: 1, relevanceScore: 0.5758284330368042 },
@@ -234,7 +234,7 @@ const compressedWithResults = await reranker.compressDocuments(result, query);
 console.log(compressedWithResults);
 ```
 
-```output
+```javascript
 [
   Document {
     pageContent: 'And I did that 4 days ago, when I nominated Circuit Court of Appeals Judge Ketanji Brown Jackson. One of our nation’s top legal minds, who will continue Justice Breyer’s legacy of excellence.',
@@ -271,6 +271,8 @@ console.log(compressedWithResults);
 ]
 ```
 
+---
+
 ## API reference
 
 For detailed documentation of all Watsonx document compressor features and configurations head to the [API reference](https://api.js.langchain.com/modules/_langchain_community.document_compressors_ibm.html).
@@ -278,8 +280,8 @@ For detailed documentation of all Watsonx document compressor features and confi
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_compressors/ibm.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_compressors/ibm.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

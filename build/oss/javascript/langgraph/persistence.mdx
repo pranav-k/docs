@@ -9,15 +9,15 @@ LangGraph has a built-in persistence layer, implemented through checkpointers. W
 ![Checkpoints](/oss/images/checkpoints.jpg)
 
 <Info>
-**LangGraph API handles checkpointing automatically**
-When using the LangGraph API, you don't need to implement or configure checkpointers manually. The API handles all persistence infrastructure for you behind the scenes.
+**Agent Server handles checkpointing automatically**
+When using the [Agent Server](/langsmith/agent-server), you don't need to implement or configure checkpointers manually. The server handles all persistence infrastructure for you behind the scenes.
 </Info>
 
 ## Threads
 
 A thread is a unique ID or thread identifier assigned to each checkpoint saved by a checkpointer. It contains the accumulated state of a sequence of [runs](/langsmith/assistants#execution). When a run is executed, the [state](/oss/javascript/langgraph/graph-api#state) of the underlying graph of the assistant will be persisted to the thread.
 
-When invoking a graph with a checkpointer, you **must** specify a `thread_id` as part of the `configurable` portion of the config.
+When invoking a graph with a checkpointer, you **must** specify a `thread_id` as part of the `configurable` portion of the config:
 
 
 
@@ -30,7 +30,9 @@ When invoking a graph with a checkpointer, you **must** specify a `thread_id` as
 ```
 
 
-A thread's current and historical state can be retrieved. To persist state, a thread must be created prior to executing a run. The LangSmith API provides several endpoints for creating and managing threads and thread state. See the [API reference](https://langchain-ai.github.io/langgraph/cloud/reference/api/) for more details.
+A thread's current and historical state can be retrieved. To persist state, a thread must be created prior to executing a run. The LangSmith API provides several endpoints for creating and managing threads and thread state. See the [API reference](https://reference.langchain.com/python/langsmith/) for more details.
+
+The checkpointer uses `thread_id` as the primary key for storing and retrieving checkpoints. Without it, the checkpointer cannot save state or resume execution after an [interrupt](/oss/javascript/langgraph/interrupts), since the checkpointer uses `thread_id` to load the saved state.
 
 ## Checkpoints
 
@@ -49,7 +51,7 @@ Let's see what checkpoints are saved when a simple graph is invoked as follows:
 
 
 ```typescript
-import { StateGraph, START, END, MemoryServer } from "@langchain/langgraph";
+import { StateGraph, START, END, MemorySaver } from "@langchain/langgraph";
 import { registry } from "@langchain/langgraph/zod";
 import * as z from "zod";
 
@@ -78,12 +80,12 @@ const checkpointer = new MemorySaver();
 const graph = workflow.compile({ checkpointer });
 
 const config = { configurable: { thread_id: "1" } };
-await graph.invoke({ foo: "" }, config);
+await graph.invoke({ foo: "", bar: [] }, config);
 ```
 
 
 ```typescript
-import { StateGraph, START, END, MemoryServer } from "@langchain/langgraph";
+import { StateGraph, START, END, MemorySaver } from "@langchain/langgraph";
 import { registry } from "@langchain/langgraph/zod";
 import * as z from "zod";
 
@@ -120,7 +122,7 @@ await graph.invoke({ foo: "" }, config);
 
 After we run the graph, we expect to see exactly 4 checkpoints:
 
-* Empty checkpoint with [`START`](https://langchain-ai.github.io/langgraphjs/reference/variables/langgraph.START.html) as the next node to be executed
+* Empty checkpoint with [`START`](https://reference.langchain.com/javascript/variables/_langchain_langgraph.index.START.html) as the next node to be executed
 * Checkpoint with the user input `{'foo': '', 'bar': []}` and `nodeA` as the next node to be executed
 * Checkpoint with the outputs of `nodeA` `{'foo': 'a', 'bar': ['a']}` and `nodeB` as the next node to be executed
 * Checkpoint with the outputs of `nodeB` `{'foo': 'b', 'bar': ['a', 'b']}` and no next nodes to be executed
@@ -363,7 +365,7 @@ The config should contain `thread_id` specifying which thread to update. When on
 
 #### `values`
 
-These are the values that will be used to update the state. Note that this update is treated exactly as any update from a node is treated. This means that these values will be passed to the [reducer](/oss/javascript/langgraph/graph-api#reducers) functions, if they are defined for some of the channels in the graph state. This means that [`update_state`](https://langchain-ai.github.io/langgraphjs/reference/classes/langgraph.CompiledStateGraph.html#updateState) does NOT automatically overwrite the channel values for every channel, but only for the channels without reducers. Let's walk through an example.
+These are the values that will be used to update the state. Note that this update is treated exactly as any update from a node is treated. This means that these values will be passed to the [reducer](/oss/javascript/langgraph/graph-api#reducers) functions, if they are defined for some of the channels in the graph state. This means that [`update_state`](https://reference.langchain.com/javascript/classes/_langchain_langgraph.pregel.Pregel.html#updateState) does NOT automatically overwrite the channel values for every channel, but only for the channels without reducers. Let's walk through an example.
 
 Let's assume you have defined the state of your graph with the following schema (see full example above):
 
@@ -423,7 +425,7 @@ The final thing you can optionally specify when calling `updateState` is `asNode
 
 ![Update](/oss/images/checkpoints_full_story.jpg)
 
-## Memory Store
+## Memory store
 
 ![Model of shared state](/oss/images/shared_state.png)
 
@@ -431,14 +433,14 @@ A [state schema](/oss/javascript/langgraph/graph-api#schema) specifies a set of 
 
 But, what if we want to retain some information _across threads_? Consider the case of a chatbot where we want to retain specific information about the user across _all_ chat conversations (e.g., threads) with that user!
 
-With checkpointers alone, we cannot share information across threads. This motivates the need for the [`Store`](https://python.langchain.com/api_reference/langgraph/index.html#module-langgraph.store) interface. As an illustration, we can define an `InMemoryStore` to store information about a user across threads. We simply compile our graph with a checkpointer, as before, and with our new `in_memory_store` variable.
+With checkpointers alone, we cannot share information across threads. This motivates the need for the [`Store`](https://reference.langchain.com/python/langgraph/store/) interface. As an illustration, we can define an `InMemoryStore` to store information about a user across threads. We simply compile our graph with a checkpointer, as before, and with our new `in_memory_store` variable.
 
 <Info>
 **LangGraph API handles stores automatically**
 When using the LangGraph API, you don't need to implement or configure stores manually. The API handles all storage infrastructure for you behind the scenes.
 </Info>
 
-### Basic Usage
+### Basic usage
 
 First, let's showcase this in isolation without using LangGraph.
 
@@ -500,7 +502,7 @@ The attributes it has are:
 * `updatedAt`: Timestamp for when this memory was updated
 
 
-### Semantic Search
+### Semantic search
 
 Beyond simple retrieval, the store also supports semantic search, allowing you to find memories based on meaning rather than exact matches. To enable this, configure the store with an embedding model:
 
@@ -716,20 +718,20 @@ See the [deployment guide](/langsmith/semantic-search) for more details and conf
 
 ## Checkpointer libraries
 
-Under the hood, checkpointing is powered by checkpointer objects that conform to [`BaseCheckpointSaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint.BaseCheckpointSaver.html) interface. LangGraph provides several checkpointer implementations, all implemented via standalone, installable libraries:
+Under the hood, checkpointing is powered by checkpointer objects that conform to [`BaseCheckpointSaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.BaseCheckpointSaver.html) interface. LangGraph provides several checkpointer implementations, all implemented via standalone, installable libraries:
 
 
 
-* `@langchain/langgraph-checkpoint`: The base interface for checkpointer savers ([`BaseCheckpointSaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint.BaseCheckpointSaver.html)) and serialization/deserialization interface ([`SerializerProtocol`](https://langchain-ai.github.io/langgraphjs/reference/interfaces/checkpoint.SerializerProtocol.html)). Includes in-memory checkpointer implementation ([`MemorySaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint.MemorySaver.html)) for experimentation. LangGraph comes with `@langchain/langgraph-checkpoint` included.
-* `@langchain/langgraph-checkpoint-sqlite`: An implementation of LangGraph checkpointer that uses SQLite database ([`SqliteSaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint_sqlite.SqliteSaver.html)). Ideal for experimentation and local workflows. Needs to be installed separately.
-* `@langchain/langgraph-checkpoint-postgres`: An advanced checkpointer that uses Postgres database ([`PostgresSaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint_postgres.PostgresSaver.html)), used in LangSmith. Ideal for using in production. Needs to be installed separately.
+* `@langchain/langgraph-checkpoint`: The base interface for checkpointer savers ([`BaseCheckpointSaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.BaseCheckpointSaver.html)) and serialization/deserialization interface ([`SerializerProtocol`](https://reference.langchain.com/javascript/interfaces/_langchain_langgraph-checkpoint.SerializerProtocol.html)). Includes in-memory checkpointer implementation ([`MemorySaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.MemorySaver.html)) for experimentation. LangGraph comes with `@langchain/langgraph-checkpoint` included.
+* `@langchain/langgraph-checkpoint-sqlite`: An implementation of LangGraph checkpointer that uses SQLite database ([`SqliteSaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint-sqlite.SqliteSaver.html)). Ideal for experimentation and local workflows. Needs to be installed separately.
+* `@langchain/langgraph-checkpoint-postgres`: An advanced checkpointer that uses Postgres database ([`PostgresSaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint-postgres.index.PostgresSaver.html)), used in LangSmith. Ideal for using in production. Needs to be installed separately.
 
 
 ### Checkpointer interface
 
 
 
-Each checkpointer conforms to the [`BaseCheckpointSaver`](https://langchain-ai.github.io/langgraphjs/reference/classes/checkpoint.BaseCheckpointSaver.html) interface and implements the following methods:
+Each checkpointer conforms to the [`BaseCheckpointSaver`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.BaseCheckpointSaver.html) interface and implements the following methods:
 
 * `.put` - Store a checkpoint with its configuration and metadata.
 * `.putWrites` - Store intermediate writes linked to a checkpoint (i.e. [pending writes](#pending-writes)).
@@ -750,13 +752,13 @@ When checkpointers save the graph state, they need to serialize the channel valu
 
 ### Human-in-the-loop
 
-First, checkpointers facilitate [human-in-the-loop workflows](/oss/javascript/langgraph/interrupts) workflows by allowing humans to inspect, interrupt, and approve graph steps. Checkpointers are needed for these workflows as the human has to be able to view the state of a graph at any point in time, and the graph has to be to resume execution after the human has made any updates to the state. See [the how-to guides](/oss/javascript/langgraph/interrupts) for examples.
+First, checkpointers facilitate [human-in-the-loop workflows](/oss/javascript/langgraph/interrupts) by allowing humans to inspect, interrupt, and approve graph steps. Checkpointers are needed for these workflows as the human has to be able to view the state of a graph at any point in time, and the graph has to be to resume execution after the human has made any updates to the state. See [the how-to guides](/oss/javascript/langgraph/interrupts) for examples.
 
 ### Memory
 
 Second, checkpointers allow for ["memory"](/oss/javascript/concepts/memory) between interactions. In the case of repeated human interactions (like conversations) any follow up messages can be sent to that thread, which will retain its memory of previous ones. See [Add memory](/oss/javascript/langgraph/add-memory) for information on how to add and manage conversation memory using checkpointers.
 
-### Time Travel
+### Time travel
 
 Third, checkpointers allow for ["time travel"](/oss/javascript/langgraph/use-time-travel), allowing users to replay prior graph executions to review and / or debug specific graph steps. In addition, checkpointers make it possible to fork the graph state at arbitrary checkpoints to explore alternative trajectories.
 
@@ -771,8 +773,8 @@ Additionally, when a graph node fails mid-execution at a given superstep, LangGr
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/persistence.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/persistence.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

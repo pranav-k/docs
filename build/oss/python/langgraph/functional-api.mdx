@@ -207,7 +207,7 @@ The **inputs** and **outputs** of entrypoints must be JSON-serializable to suppo
 
 ### Injectable parameters
 
-When declaring an `entrypoint`, you can request access to additional parameters that will be injected automatically at run time. These parameters include:
+When declaring an `entrypoint`, you can request access to additional parameters that will be injected automatically at runtime. These parameters include:
 
 | Parameter    | Description                                                                                                                                                        |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -226,11 +226,14 @@ Declare the parameters with the appropriate name and type annotation.
   from langgraph.func import entrypoint
   from langgraph.store.base import BaseStore
   from langgraph.store.memory import InMemoryStore
+  from langgraph.checkpoint.memory import InMemorySaver
+  from langgraph.types import StreamWriter
 
+  in_memory_checkpointer = InMemorySaver(...)
   in_memory_store = InMemoryStore(...)  # An instance of InMemoryStore for long-term memory
 
   @entrypoint(
-      checkpointer=checkpointer,  # Specify the checkpointer
+      checkpointer=in_memory_checkpointer,  # Specify the checkpointer
       store=in_memory_store  # Specify the store
   )
   def my_workflow(
@@ -547,7 +550,7 @@ To obtain the result of a **task**, you can either wait for it synchronously (us
 * **Checkpointing**: When you need to save the result of a long-running operation to a checkpoint, so you don't need to recompute it when resuming the workflow.
 * **Human-in-the-loop**: If you're building a workflow that requires human intervention, you MUST use **tasks** to encapsulate any randomness (e.g., API calls) to ensure that the workflow can be resumed correctly. See the [determinism](#determinism) section for more details.
 * **Parallel Execution**: For I/O-bound tasks, **tasks** enable parallel execution, allowing multiple operations to run concurrently without blocking (e.g., calling multiple APIs).
-* **Observability**: Wrapping operations in **tasks** provides a way to track the progress of the workflow and monitor the execution of individual operations using [LangSmith](https://docs.smith.langchain.com/).
+* **Observability**: Wrapping operations in **tasks** provides a way to track the progress of the workflow and monitor the execution of individual operations using [LangSmith](https://docs.langchain.com/langsmith/home).
 * **Retryable Work**: When work needs to be retried to handle failures or inconsistencies, **tasks** provide a way to encapsulate and manage the retry logic.
 
 ## Serialization
@@ -578,7 +581,7 @@ While different runs of a workflow can produce different results, resuming a **s
 
 Idempotency ensures that running the same operation multiple times produces the same result. This helps prevent duplicate API calls and redundant processing if a step is rerun due to a failure. Always place API calls inside **tasks** functions for checkpointing, and design them to be idempotent in case of re-execution. Re-execution can occur if a **task** starts, but does not complete successfully. Then, if the workflow is resumed, the **task** will run again. Use idempotency keys or verify existing results to avoid duplication.
 
-## Common Pitfalls
+## Common pitfalls
 
 ### Handling side effects
 
@@ -712,8 +715,8 @@ Please read the section on [determinism](#determinism) for more details.
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/functional-api.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/functional-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

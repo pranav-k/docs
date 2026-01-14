@@ -2,14 +2,11 @@
 title: OpenAI
 ---
 
-
 <Warning>
 **You are currently on a page documenting the use of OpenAI text completion models. The latest and most popular OpenAI models are [chat completion models](/oss/javascript/langchain/models).**
 
-
 Unless you are specifically using `gpt-3.5-turbo-instruct`, you are probably looking for [this page instead](/oss/javascript/integrations/chat/openai/).
 </Warning>
-
 
 [OpenAI](https://en.wikipedia.org/wiki/OpenAI) is an artificial intelligence (AI) research laboratory.
 
@@ -35,7 +32,7 @@ Head to [platform.openai.com](https://platform.openai.com/) to sign up to OpenAI
 export OPENAI_API_KEY="your-api-key"
 ```
 
-If you want to get automated tracing of your model calls you can also set your [LangSmith](https://docs.smith.langchain.com/) API key by uncommenting below:
+If you want to get automated tracing of your model calls you can also set your [LangSmith](https://docs.langchain.com/langsmith/home) API key by uncommenting below:
 
 ```bash
 # export LANGSMITH_TRACING="true"
@@ -85,7 +82,7 @@ const completion = await llm.invoke(inputText)
 completion
 ```
 
-```output
+```text
 develops and promotes friendly AI for the benefit of humanity. It was founded in 2015 by Elon Musk, Sam Altman, Greg Brockman, Ilya Sutskever, Wojciech Zaremba, John Schulman, and Chris Olah. The company's mission is to create and promote artificial general intelligence (AGI) that is safe and beneficial to humanity.
 
 OpenAI conducts research in various areas of AI, including deep learning, reinforcement learning, robotics, and natural language processing. The company also develops and releases open-source tools and platforms for AI research, such as the GPT-3 language model and the Gym toolkit for reinforcement learning.
@@ -114,6 +111,8 @@ You can also pass other `ClientOptions` parameters accepted by the official SDK.
 
 If you are hosting on Azure OpenAI, see the [dedicated page instead](/oss/javascript/integrations/llms/azure).
 
+---
+
 ## API reference
 
 For detailed documentation of all OpenAI features and configurations head to the [API reference](https://api.js.langchain.com/classes/langchain_openai.OpenAI.html).
@@ -121,8 +120,8 @@ For detailed documentation of all OpenAI features and configurations head to the
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/llms/openai.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/llms/openai.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

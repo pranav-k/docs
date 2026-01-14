@@ -2,7 +2,7 @@
 title: Chat models
 ---
 
-[Chat models](/oss/javascript/langchain/models) are language models that use a sequence of [messages](/oss/javascript/langchain/messages) as inputs and return messages as outputs <Tooltip tip="Models that do not include the prefix 'Chat' in their name or include 'LLM' as a suffix in their name typically refer to older models that do not follow the chat model interface and instead use an interface that takes a string as input and returns a string as output.">(as opposed to plaintext)</Tooltip>.
+[Chat models](/oss/javascript/langchain/models) are language models that use a sequence of [messages](/oss/javascript/langchain/messages) as inputs and return messages as outputs <Tooltip tip="Older models that do not follow the chat model interface and instead use an interface that takes a string as input and returns a string as output. These models typically do not include the prefix 'Chat' in their name or include 'LLM' as a suffix.">(as opposed to plaintext)</Tooltip>.
 
 ## Install and use
 
@@ -143,7 +143,7 @@ title: Chat models
         import { ChatVertexAI } from "@langchain/google-vertexai";
 
         const model = new ChatVertexAI({
-        model: "gemini-1.5-flash",
+        model: "gemini-2.5-flash",
         temperature: 0
         });
         ```
@@ -262,28 +262,32 @@ title: Chat models
     </Accordion>
 </AccordionGroup>
 
-## Featured providers
+## Featured models
 
-| Model                                                                    | Stream | JSON mode | [Tool Calling](/oss/javascript/langchain/tools/) | [`withStructuredOutput()`](/oss/javascript/langchain/structured-output#the-.withstructuredoutput-method) | [Multimodal](/oss/javascript/langchain/messages#multimodal) |
-| :----------------------------------------------------------------------- | :----: | :-------: | :----------------------------------------: | :------------------------------------------------------------------------------------------: | :-------------------------------------------: |
-| [`BedrockChat`](/oss/javascript/integrations/chat/bedrock/)                          |   ✅   |    ❌     |        🟡 (Bedrock Anthropic only)         |                                 🟡 (Bedrock Anthropic only)                                  |          🟡 (Bedrock Anthropic only)          |
-| [`ChatBedrockConverse`](/oss/javascript/integrations/chat/bedrock_converse/)         |   ✅   |    ❌     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatAnthropic`](/oss/javascript/integrations/chat/anthropic/)                      |   ✅   |    ❌     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatCloudflareWorkersAI`](/oss/javascript/integrations/chat/cloudflare_workersai/) |   ✅   |    ❌     |                     ❌                     |                                              ❌                                              |                      ❌                       |
-| [`ChatCohere`](/oss/javascript/integrations/chat/cohere/)                            |   ✅   |    ❌     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatFireworks`](/oss/javascript/integrations/chat/fireworks/)                      |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatGoogleGenerativeAI`](/oss/javascript/integrations/chat/google_generative_ai/)   |   ✅   |    ❌     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatVertexAI`](/oss/javascript/integrations/chat/google_vertex_ai/)                |   ✅   |    ❌     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatGroq`](/oss/javascript/integrations/chat/groq/)                                |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatMistralAI`](/oss/javascript/integrations/chat/mistral/)                        |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatOllama`](/oss/javascript/integrations/chat/ollama/)                            |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatOpenAI`](/oss/javascript/integrations/chat/openai/)                            |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatTogetherAI`](/oss/javascript/integrations/chat/togetherai/)                    |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ✅                       |
-| [`ChatXAI`](/oss/javascript/integrations/chat/xai/)                                  |   ✅   |    ✅     |                     ✅                     |                                              ✅                                              |                      ❌                       |
+<Info>
+    **While these LangChain classes support the indicated advanced feature**, you may need to refer to provider-specific documentation to learn which hosted models or backends support the feature.
+</Info>
 
-## Chat Completions API
+| Model | Stream | [Tool Calling](/oss/javascript/langchain/tools/) | [`withStructuredOutput()`](/oss/javascript/langchain/structured-output#the-.withstructuredoutput-method) | [Multimodal](/oss/javascript/langchain/messages#multimodal) |
+|-|-|-|-|-|
+| [`ChatOpenAI`](/oss/javascript/integrations/chat/openai/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatAnthropic`](/oss/javascript/integrations/chat/anthropic/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatGoogleGenerativeAI`](/oss/javascript/integrations/chat/google_generative_ai/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatVertexAI`](/oss/javascript/integrations/chat/google_vertex_ai/) | ✅ | ✅ | ✅ | ✅ |
+| [`BedrockChat`](/oss/javascript/integrations/chat/bedrock/) | ✅ | 🟡 (Bedrock Anthropic only) | 🟡 (Bedrock Anthropic only) | 🟡 (Bedrock Anthropic only) |
+| [`ChatBedrockConverse`](/oss/javascript/integrations/chat/bedrock_converse/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatCloudflareWorkersAI`](/oss/javascript/integrations/chat/cloudflare_workersai/) | ✅ | ❌ | ❌ | ❌ |
+| [`ChatCohere`](/oss/javascript/integrations/chat/cohere/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatFireworks`](/oss/javascript/integrations/chat/fireworks/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatGroq`](/oss/javascript/integrations/chat/groq/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatMistralAI`](/oss/javascript/integrations/chat/mistral/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatOllama`](/oss/javascript/integrations/chat/ollama/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatTogetherAI`](/oss/javascript/integrations/chat/togetherai/) | ✅ | ✅ | ✅ | ✅ |
+| [`ChatXAI`](/oss/javascript/integrations/chat/xai/) | ✅ | ✅ | ✅ | ❌ |
 
-Certain model providers offer endpoints that are compatible with OpenAI's (legacy) [Chat Completions API](https://platform.openai.com/docs/guides/completions). In such case, you can use [`ChatOpenAI`](/oss/javascript/integrations/chat/openai) with a custom `base_url` to connect to these endpoints.
+## Chat completions API
+
+Certain model providers offer endpoints that are compatible with OpenAI's (legacy) [Chat Completions API](https://platform.openai.com/docs/guides/completions). In such case, you can use [`ChatOpenAI`](/oss/javascript/integrations/chat/openai) with a custom `base_url` to connect to these endpoints. Note that features built on top of the Chat Completions API may not be fully supported by `ChatOpenAI`; in such cases, consider using a provider-specific class if available.
 
 <Accordion title="Example: OpenRouter">
     To use OpenRouter, you will need to sign up for an account and obtain an [API key](https://openrouter.ai/docs/api-reference/authentication).
@@ -553,8 +557,8 @@ Certain model providers offer endpoints that are compatible with OpenAI's (legac
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/chat/index.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/chat/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

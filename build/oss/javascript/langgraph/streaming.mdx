@@ -18,7 +18,7 @@ What's possible with LangGraph streaming:
 
 
 
-Pass one or more of the following stream modes as a list to the [`stream`](https://langchain-ai.github.io/langgraphjs/reference/classes/langgraph.CompiledStateGraph.html#stream) method:
+Pass one or more of the following stream modes as a list to the [`stream`](https://reference.langchain.com/javascript/classes/_langchain_langgraph.index.CompiledStateGraph.html#stream) method:
 
 
 | Mode       | Description                                                                                                                                                                         |
@@ -33,7 +33,7 @@ Pass one or more of the following stream modes as a list to the [`stream`](https
 
 
 
-LangGraph graphs expose the [`stream`](https://langchain-ai.github.io/langgraphjs/reference/classes/langgraph.Pregel.html#stream) method to yield streamed outputs as iterators.
+LangGraph graphs expose the [`stream`](https://reference.langchain.com/javascript/classes/_langchain_langgraph.pregel.Pregel.html#stream) method to yield streamed outputs as iterators.
 
 ```typescript
 for await (const chunk of await graph.stream(inputs, {
@@ -79,7 +79,7 @@ for await (const chunk of await graph.stream(inputs, {
   ```
 
 
-  ```output
+  ```python
   {'refineTopic': {'topic': 'ice cream and cats'}}
   {'generateJoke': {'joke': 'This is a joke about ice cream and cats'}}
   ```
@@ -387,7 +387,7 @@ for await (const [msg, metadata] of await graph.stream(
   });
 
   const graph = new StateGraph(State)
-    .addNode("callModel", (state) => {
+    .addNode("callModel", async (state) => {
       const topic = state.topic;
       console.log("Writing joke...");
 
@@ -707,7 +707,7 @@ for await (const chunk of await graph.stream(
     .compile();
   ```
 
-  Let's invoke the graph with an [`AIMessage`](https://v03.api.js.langchain.com/classes/_langchain_core.messages_ai_message.AIMessage.html) that includes a tool call:
+  Let's invoke the graph with an [`AIMessage`](https://reference.langchain.com/javascript/classes/_langchain_core.messages.AIMessage.html) that includes a tool call:
 
   ```typescript
   const inputs = {
@@ -758,11 +758,18 @@ const model = new ChatOpenAI({
 });
 ```
 
+
+
+
+<Note>
+Not all chat model integrations support the `streaming` parameter. If your model doesn't support it, use `disableStreaming: true` instead. This parameter is available on all chat models via the base class.
+</Note>
+
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/streaming.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/streaming.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

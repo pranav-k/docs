@@ -10,7 +10,6 @@ import EmbeddingsTabsJS from '/snippets/embeddings-tabs-js.mdx';
 import VectorstoreTabsPy from '/snippets/vectorstore-tabs-py.mdx';
 import VectorstoreTabsJS from '/snippets/vectorstore-tabs-js.mdx';
 
-
 ## Overview
 
 One of the most powerful applications enabled by LLMs is sophisticated question-answering (Q&A) chatbots. These are applications that can answer questions about specific source information. These applications use a technique known as Retrieval Augmented Generation, or [RAG](/oss/javascript/langchain/retrieval/).
@@ -190,7 +189,7 @@ Indexing commonly works as follows:
 
 ### Loading documents
 
-We need to first load the blog post contents. We can use [DocumentLoaders](/oss/javascript/langchain/retrieval#document_loaders) for this, which are objects that load in data from a source and return a list of [Document](https://v03.api.js.langchain.com/classes/_langchain_core.documents.Document.html) objects.
+We need to first load the blog post contents. We can use [DocumentLoaders](/oss/javascript/langchain/retrieval#document_loaders) for this, which are objects that load in data from a source and return a list of [Document](https://reference.langchain.com/javascript/classes/_langchain_core.documents.Document.html) objects.
 
 
 ```typescript
@@ -225,13 +224,13 @@ Building agents with LLM (large language model) as its core controller is...
 `DocumentLoader`: Object that loads data from a source as list of `Documents`.
 
 - [Integrations](/oss/javascript/integrations/document_loaders/): 160+ integrations to choose from.
-- [`BaseLoader`](https://v03.api.js.langchain.com/classes/_langchain_core.document_loaders_base.BaseDocumentLoader.html): API reference for the base interface.
+- [`BaseLoader`](https://reference.langchain.com/javascript/classes/_langchain_core.document_loaders_base.BaseDocumentLoader.html): API reference for the base interface.
 
 ### Splitting documents
 
 Our loaded document is over 42k characters which is too long to fit into the context window of many models. Even for those models that could fit the full post in their context window, models can struggle to find information in very long inputs.
 
-To handle this we'll split the [`Document`](https://v03.api.js.langchain.com/classes/_langchain_core.documents.Document.html) into chunks for embedding and vector storage. This should help us retrieve only the most relevant parts of the blog post at run time.
+To handle this we'll split the [`Document`](https://reference.langchain.com/javascript/classes/_langchain_core.documents.Document.html) into chunks for embedding and vector storage. This should help us retrieve only the most relevant parts of the blog post at run time.
 
 As in the [semantic search tutorial](/oss/javascript/langchain/knowledge-base), we use a `RecursiveCharacterTextSplitter`, which will recursively split the document using common separators like new lines until each chunk is the appropriate size. This is the recommended text splitter for generic text use cases.
 
@@ -268,7 +267,7 @@ await vectorStore.addDocuments(allSplits);
 `Embeddings`: Wrapper around a text embedding model, used for converting text to embeddings.
 
 - [Integrations](/oss/javascript/integrations/text_embedding/): 30+ integrations to choose from.
-- [Interface](https://v03.api.js.langchain.com/classes/_langchain_core.embeddings.Embeddings.html): API reference for the base interface.
+- [Interface](https://reference.langchain.com/javascript/classes/_langchain_core.embeddings.Embeddings.html): API reference for the base interface.
 
 `VectorStore`: Wrapper around a vector database, used for storing and querying embeddings.
 
@@ -277,7 +276,7 @@ await vectorStore.addDocuments(allSplits);
 
 This completes the **Indexing** portion of the pipeline. At this point we have a query-able vector store containing the chunked contents of our blog post. Given a user question, we should ideally be able to return the snippets of the blog post that answer the question.
 
-## 2. Retrieval and Generation
+## 2. Retrieval and generation
 
 RAG applications commonly work as follows:
 
@@ -331,8 +330,6 @@ const retrieve = tool(
 
 Given our tool, we can construct the agent:
 
-
-Given our tool, we can construct the agent:
 
 ```typescript
 import { createAgent } from "langchain";
@@ -538,19 +535,22 @@ const agent = createAgent({
 
 ## Next steps
 
-Now that we've implemented a simple RAG application via @[`create_agent`], we can easily incorporate new features and go deeper:
+
+Now that we've implemented a simple RAG application via [`createAgent`](https://reference.langchain.com/javascript/functions/langchain.index.createAgent.html), we can easily incorporate new features and go deeper:
+
+
 
 - [Stream](/oss/javascript/langchain/streaming) tokens and other information for responsive user experiences
 - Add [conversational memory](/oss/javascript/langchain/short-term-memory) to support multi-turn interactions
 - Add [long-term memory](/oss/javascript/langchain/long-term-memory) to support memory across conversational threads
 - Add [structured responses](/oss/javascript/langchain/structured-output)
-- Deploy your application with [LangSmith Deployments](/langsmith/deployments)
+- Deploy your application with [LangSmith Deployment](/langsmith/deployments)
 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/rag.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/rag.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

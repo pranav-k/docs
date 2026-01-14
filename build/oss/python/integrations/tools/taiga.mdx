@@ -29,11 +29,6 @@ The integration lives in the `langchain-taiga` package.
 pip install --quiet -U langchain-taiga
 ```
 
-```output
-/home/henlein/Workspace/PyCharm/langchain/.venv/bin/python: No module named pip
-Note: you may need to restart the kernel to use updated packages.
-```
-
 ### Credentials
 
 This integration requires you to set `TAIGA_URL`, `TAIGA_API_URL`, `TAIGA_USERNAME`, `TAIGA_PASSWORD` and `OPENAI_API_KEY` as environment variables to authenticate with Taiga.
@@ -171,6 +166,8 @@ for event in events:
     event["messages"][-1].pretty_print()
 ```
 
+---
+
 ## API reference
 
 See the docstrings in:
@@ -183,8 +180,8 @@ for usage details, parameters, and advanced configurations.
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/taiga.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/taiga.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

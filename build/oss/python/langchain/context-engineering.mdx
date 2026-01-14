@@ -3,8 +3,6 @@ title: Context engineering in agents
 sidebarTitle: Context engineering
 ---
 
-
-
 ## Overview
 
 The hard part of building agents (or any LLM application) is making them reliable enough. While they may work for a prototype, they often fail in real-world use cases.
@@ -81,7 +79,7 @@ Middleware allows you to hook into any step in the agent lifecycle and:
 
 Throughout this guide, you'll see frequent use of the middleware API as a means to the context engineering end.
 
-## Model Context
+## Model context
 
 Control what goes into each model call - instructions, available tools, which model to use, and output format. These decisions directly impact reliability and cost.
 
@@ -758,7 +756,7 @@ might change during an agent run.
 
 See [Dynamic model](/oss/python/langchain/agents#dynamic-model) for more examples.
 
-### Response Format
+### Response format
 
 Structured output transforms unstructured text into validated, structured data. When extracting specific fields or returning data for downstream systems, free-form text isn't sufficient.
 
@@ -959,7 +957,7 @@ Dynamic response format selection adapts schemas based on user preferences, conv
   </Tab>
 </Tabs>
 
-## Tool Context
+## Tool context
 
 Tools are special in that they both read and write context.
 
@@ -1187,7 +1185,7 @@ and update the memory of the agent to make important context available to future
 
 See [Tools](/oss/python/langchain/tools) for comprehensive examples of accessing state, store, and runtime context in tools.
 
-## Life-cycle Context
+## Life-cycle context
 
 Control what happens **between** the core agent steps - intercepting data flow to implement cross-cutting concerns like summarization, guardrails, and logging.
 
@@ -1220,8 +1218,8 @@ agent = create_agent(
     middleware=[
         SummarizationMiddleware(
             model="gpt-4o-mini",
-            max_tokens_before_summary=4000,  # Trigger summarization at 4000 tokens
-            messages_to_keep=20,  # Keep last 20 messages after summary
+            trigger={"tokens": 4000},
+            keep={"messages": 20},
         ),
     ],
 )
@@ -1261,8 +1259,8 @@ For a complete list of built-in middleware, available hooks, and how to create c
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/context-engineering.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/context-engineering.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

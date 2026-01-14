@@ -3,17 +3,17 @@ sidebar_position: 0
 sidebarTitle: "Document loaders"
 ---
 
-Document loaders provide a **standard interface** for reading data from different sources (such as Slack, Notion, or Google Drive) into LangChain's [Document](https://v03.api.js.langchain.com/classes/_langchain_core.documents.Document.html) format.
+Document loaders provide a **standard interface** for reading data from different sources (such as Slack, Notion, or Google Drive) into LangChain's [Document](https://reference.langchain.com/javascript/classes/_langchain_core.documents.Document.html) format.
 This ensures that data can be handled consistently regardless of the source.
 
-All document loaders implement the [BaseLoader](https://v03.api.js.langchain.com/classes/_langchain_core.document_loaders_base.BaseDocumentLoader.html) interface.
+All document loaders implement the [BaseLoader](https://reference.langchain.com/javascript/classes/_langchain_core.document_loaders_base.BaseDocumentLoader.html) interface.
 
 ## Interface
 
 Each document loader may define its own parameters, but they share a common API:
 
-- `.load()`: Loads all documents at once.
-- `.loadAndSplit()`: Loads all documents at once and splits them into smaller documents.
+- `load()`: Loads all documents at once.
+- `loadAndSplit()`: Loads all documents at once and splits them into smaller documents.
 
 ```typescript
 import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
@@ -43,7 +43,7 @@ LangChain.js categorizes document loaders in two different ways:
 |----------------|-------------|-------------|
 | [PDFLoader](/oss/javascript/integrations/document_loaders/file_loaders/pdf) | Load and parse PDF files using pdf-parse | Package |
 
-#### Common File Types
+#### Common file types
 
 | Document Loader | Description | Package/API |
 |----------------|-------------|-------------|
@@ -56,14 +56,14 @@ LangChain.js categorizes document loaders in two different ways:
 | [PPTX](/oss/javascript/integrations/document_loaders/file_loaders/pptx) | Load PowerPoint presentations | Package |
 | [Subtitles](/oss/javascript/integrations/document_loaders/file_loaders/subtitles) | Load subtitle files (.srt format) | Package |
 
-#### Specialized File Loaders
+#### Specialized file loaders
 
 | Document Loader | Description | Package/API |
 |----------------|-------------|-------------|
-| [DirectoryLoader](/oss/javascript/integrations/document_loaders/file_loaders/directory) | Load all files from a directory with custom loader mappings | Package |
-| [UnstructuredLoader](/oss/javascript/integrations/document_loaders/file_loaders/unstructured) | Load multiple file types using Unstructured API | API |
-| [MultiFileLoader](/oss/javascript/integrations/document_loaders/file_loaders/multi_file) | Load data from multiple individual file paths | Package |
-| [ChatGPT](/oss/javascript/integrations/document_loaders/file_loaders/chatgpt) | Load ChatGPT conversation exports | Package |
+| [`DirectoryLoader`](/oss/javascript/integrations/document_loaders/file_loaders/directory) | Load all files from a directory with custom loader mappings | Package |
+| [`UnstructuredLoader`](/oss/javascript/integrations/document_loaders/file_loaders/unstructured) | Load multiple file types using Unstructured API | API |
+| [`MultiFileLoader`](/oss/javascript/integrations/document_loaders/file_loaders/multi_file) | Load data from multiple individual file paths | Package |
+| [`ChatGPT`](/oss/javascript/integrations/document_loaders/file_loaders/chatgpt) | Load ChatGPT conversation exports | Package |
 | [Notion Markdown](/oss/javascript/integrations/document_loaders/file_loaders/notion_markdown) | Load Notion pages exported as Markdown | Package |
 | [OpenAI Whisper Audio](/oss/javascript/integrations/document_loaders/file_loaders/openai_whisper_audio) | Transcribe audio files using OpenAI Whisper API | API |
 
@@ -73,17 +73,17 @@ LangChain.js categorizes document loaders in two different ways:
 
 | Document Loader | Description | Web Support | Package/API |
 |----------------|-------------|:-----------:|-------------|
-| [Cheerio](/oss/javascript/integrations/document_loaders/web_loaders/web_cheerio) | Load webpages using Cheerio (lightweight, no JavaScript execution) | ✅ | Package |
-| [Playwright](/oss/javascript/integrations/document_loaders/web_loaders/web_playwright) | Load dynamic webpages using Playwright (supports JavaScript rendering) | ❌ | Package |
-| [Puppeteer](/oss/javascript/integrations/document_loaders/web_loaders/web_puppeteer) | Load dynamic webpages using Puppeteer (headless Chrome) | ❌ | Package |
-| [FireCrawl](/oss/javascript/integrations/document_loaders/web_loaders/firecrawl) | Crawl and convert websites into LLM-ready markdown | ✅ | API |
-| [Spider](/oss/javascript/integrations/document_loaders/web_loaders/spider) | Fast crawler that converts websites into HTML, markdown, or text | ✅ | API |
-| [RecursiveUrlLoader](/oss/javascript/integrations/document_loaders/web_loaders/recursive_url_loader) | Recursively load webpages following links | ❌ | Package |
-| [Sitemap](/oss/javascript/integrations/document_loaders/web_loaders/sitemap) | Load all pages from a sitemap.xml | ✅ | Package |
-| [Browserbase](/oss/javascript/integrations/document_loaders/web_loaders/browserbase) | Load webpages using managed headless browsers with stealth mode | ✅ | API |
-| [WebPDFLoader](/oss/javascript/integrations/document_loaders/web_loaders/pdf) | Load PDF files in web environments | ✅ | Package |
+| [`Cheerio`](/oss/javascript/integrations/document_loaders/web_loaders/web_cheerio) | Load webpages using Cheerio (lightweight, no JavaScript execution) | ✅ | Package |
+| [`Playwright`](/oss/javascript/integrations/document_loaders/web_loaders/web_playwright) | Load dynamic webpages using Playwright (supports JavaScript rendering) | ❌ | Package |
+| [`Puppeteer`](/oss/javascript/integrations/document_loaders/web_loaders/web_puppeteer) | Load dynamic webpages using Puppeteer (headless Chrome) | ❌ | Package |
+| [`FireCrawl`](/oss/javascript/integrations/document_loaders/web_loaders/firecrawl) | Crawl and convert websites into LLM-ready markdown | ✅ | API |
+| [`Spider`](/oss/javascript/integrations/document_loaders/web_loaders/spider) | Fast crawler that converts websites into HTML, markdown, or text | ✅ | API |
+| [`RecursiveUrlLoader`](/oss/javascript/integrations/document_loaders/web_loaders/recursive_url_loader) | Recursively load webpages following links | ❌ | Package |
+| [`Sitemap`](/oss/javascript/integrations/document_loaders/web_loaders/sitemap) | Load all pages from a sitemap.xml | ✅ | Package |
+| [`Browserbase`](/oss/javascript/integrations/document_loaders/web_loaders/browserbase) | Load webpages using managed headless browsers with stealth mode | ✅ | API |
+| [`WebPDFLoader`](/oss/javascript/integrations/document_loaders/web_loaders/pdf) | Load PDF files in web environments | ✅ | Package |
 
-#### Cloud Providers
+#### Cloud providers
 
 | Document Loader | Description | Web Support | Package/API |
 |----------------|-------------|:-----------:|-------------|
@@ -93,7 +93,7 @@ LangChain.js categorizes document loaders in two different ways:
 | [Google Cloud Storage](/oss/javascript/integrations/document_loaders/web_loaders/google_cloud_storage) | Load files from Google Cloud Storage buckets | ❌ | Package |
 | [Google Cloud SQL for PostgreSQL](/oss/javascript/integrations/document_loaders/web_loaders/google_cloudsql_pg) | Load documents from Cloud SQL PostgreSQL databases | ✅ | Package |
 
-#### Productivity Tools
+#### Productivity tools
 
 | Document Loader | Description | Web Support | Package/API |
 |----------------|-------------|:-----------:|-------------|
@@ -106,15 +106,15 @@ LangChain.js categorizes document loaders in two different ways:
 | [Airtable](/oss/javascript/integrations/document_loaders/web_loaders/airtable) | Load records from Airtable bases | ✅ | API |
 | [Taskade](/oss/javascript/integrations/document_loaders/web_loaders/taskade) | Load Taskade project data | ✅ | API |
 
-#### Search & Data APIs
+#### Search & data APIs
 
 | Document Loader | Description | Web Support | Package/API |
 |----------------|-------------|:-----------:|-------------|
 | [SearchAPI](/oss/javascript/integrations/document_loaders/web_loaders/searchapi) | Load web search results from SearchAPI (Google, YouTube, etc.) | ✅ | API |
-| [SerpAPI](/oss/javascript/integrations/document_loaders/web_loaders/serpapi) | Load web search results from SerpAPI | ✅ | API |
+| [SerpApi](/oss/javascript/integrations/document_loaders/web_loaders/serpapi) | Load web search results from SerpApi | ✅ | API |
 | [Apify Dataset](/oss/javascript/integrations/document_loaders/web_loaders/apify_dataset) | Load scraped data from Apify platform | ✅ | API |
 
-#### Audio & Video
+#### Audio & video
 
 | Document Loader | Description | Web Support | Package/API |
 |----------------|-------------|:-----------:|-------------|
@@ -175,7 +175,7 @@ LangChain.js categorizes document loaders in two different ways:
 <Card title="RecursiveUrlLoader" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/recursive_url_loader" arrow="true" cta="View guide" />
 <Card title="S3" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/s3" arrow="true" cta="View guide" />
 <Card title="SearchAPI" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/searchapi" arrow="true" cta="View guide" />
-<Card title="SerpAPI" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/serpapi" arrow="true" cta="View guide" />
+<Card title="SerpApi" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/serpapi" arrow="true" cta="View guide" />
 <Card title="Sitemap" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/sitemap" arrow="true" cta="View guide" />
 <Card title="Sonix Audio" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/sonix_audio_transcription" arrow="true" cta="View guide" />
 <Card title="Spider" icon="link" href="/oss/javascript/integrations/document_loaders/web_loaders/spider" arrow="true" cta="View guide" />
@@ -190,8 +190,8 @@ LangChain.js categorizes document loaders in two different ways:
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_loaders/index.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_loaders/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

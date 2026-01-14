@@ -20,7 +20,7 @@ Then, you'll need to install the [`@langchain/community`](https://www.npmjs.com/
 
 ### Credentials
 
-If you want to get automated tracing of your model calls you can also set your [LangSmith](https://docs.smith.langchain.com/) API key by uncommenting below:
+If you want to get automated tracing of your model calls you can also set your [LangSmith](https://docs.langchain.com/langsmith/home) API key by uncommenting below:
 
 ```bash
 # export LANGCHAIN_TRACING_V2="true"
@@ -55,7 +55,7 @@ const embeddings = new ByteDanceDoubaoEmbeddings({
 });
 ```
 
-## Indexing and Retrieval
+## Indexing and retrieval
 
 Embedding models are often used in retrieval-augmented generation (RAG) flows, both as part of indexing data as well as later retrieving it. For more detailed instructions, please see our RAG tutorials under the [**Learn** tab](/oss/javascript/learn/).
 
@@ -81,11 +81,11 @@ const retrievedDocuments = await retriever.invoke("What is LangChain?");
 retrievedDocuments[0].pageContent;
 ```
 
-```output
+```text
 LangChain is the framework for building context-aware reasoning applications
 ```
 
-## Direct Usage
+## Direct usage
 
 Under the hood, the vectorstore and retriever implementations are calling `embeddings.embedDocument(...)` and `embeddings.embedQuery(...)` to create embeddings for the text(s) used in `fromDocuments` and the retriever's `invoke` operations, respectively.
 
@@ -101,7 +101,7 @@ const singleVector = await embeddings.embedQuery(text);
 console.log(singleVector.slice(0, 100));
 ```
 
-```output
+```text
 [
    0.026051683,   0.029081265,  -0.040726297,  -0.015116953, -0.010691089,
    0.030181013, -0.0065084146,   -0.02079503,   0.013575795,   0.03452527,
@@ -139,7 +139,7 @@ console.log(vectors[0].slice(0, 100));
 console.log(vectors[1].slice(0, 100));
 ```
 
-```output
+```text
 [
    0.026051683,   0.029081265,  -0.040726297,  -0.015116953, -0.010691089,
    0.030181013, -0.0065084146,   -0.02079503,   0.013575795,   0.03452527,
@@ -191,6 +191,8 @@ console.log(vectors[1].slice(0, 100));
 - Embedding model [conceptual guide](/oss/javascript/integrations/text_embedding)
 - Embedding model [how-to guides](/oss/javascript/integrations/text_embedding)
 
+---
+
 ## API reference
 
 For detailed documentation of all ByteDanceDoubaoEmbeddings features and configurations head to the [API reference](https://api.js.langchain.com/classes/_langchain_community.embeddings_bytedance_doubao.ByteDanceDoubaoEmbeddings.html).
@@ -198,8 +200,8 @@ For detailed documentation of all ByteDanceDoubaoEmbeddings features and configu
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/text_embedding/bytedance_doubao.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/text_embedding/bytedance_doubao.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

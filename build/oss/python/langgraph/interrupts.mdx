@@ -130,7 +130,6 @@ graph.invoke(Command(resume=False), config=config)
 
 <Accordion title="Full example">
     ```python
-    import sqlite3
     from typing import Literal, Optional, TypedDict
 
     from langgraph.checkpoint.memory import MemorySaver
@@ -167,8 +166,6 @@ graph.invoke(Command(resume=False), config=config)
     builder.add_node("proceed", proceed_node)
     builder.add_node("cancel", cancel_node)
     builder.add_edge(START, "approval")
-    builder.add_edge("approval", "proceed")
-    builder.add_edge("approval", "cancel")
     builder.add_edge("proceed", END)
     builder.add_edge("cancel", END)
 
@@ -759,12 +756,12 @@ def node_in_parent_graph(state: State):
     # Invoke a subgraph as a function.
     # The subgraph contains an `interrupt` call.
     subgraph_result = subgraph.invoke(some_input)
+    # ...
 
-async function node_in_subgraph(state: State) {
-    someOtherCode(); # <-- This will also re-execute when resumed
+def node_in_subgraph(state: State):
+    some_other_code()  # <-- This will also re-execute when resumed
     result = interrupt("What's your name?")
-    ...
-}
+    # ...
 ```
 
 
@@ -776,7 +773,7 @@ To debug and test a graph, you can use static interrupts as breakpoints to step 
 
 
 <Note>
-    Static interrupts are **not** recommended for human-in-the-loop workflows. Use the [`interrupt`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.interrupt) method instead.
+    Static interrupts are **not** recommended for human-in-the-loop workflows. Use the [`interrupt`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.interrupt) function instead.
 </Note>
 
 <Tabs>
@@ -850,8 +847,8 @@ You can use [LangGraph Studio](/langsmith/studio) to set static interrupts in yo
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/interrupts.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/interrupts.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

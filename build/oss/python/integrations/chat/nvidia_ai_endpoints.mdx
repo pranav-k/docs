@@ -24,15 +24,15 @@ For more information on accessing the chat models through this api, check out th
 
 ### Integration details
 
-| Class | Package | Local | Serializable | JS support | Downloads | Version |
-| :--- | :--- | :---: | :---: |  :---: | :---: | :---: |
-| [ChatNVIDIA](https://python.langchain.com/api_reference/nvidia_ai_endpoints/chat_models/langchain_nvidia_ai_endpoints.chat_models.ChatNVIDIA.html) | [langchain-nvidia-ai-endpoints](https://python.langchain.com/api_reference/nvidia_ai_endpoints/index.html) | ✅ | beta | ❌ | ![PyPI - Downloads](https://img.shields.io/pypi/dm/langchain_nvidia_ai_endpoints?style=flat-square&label=%20) | ![PyPI - Version](https://img.shields.io/pypi/v/langchain_nvidia_ai_endpoints?style=flat-square&label=%20) |
+| Class | Package | Serializable | JS support | Downloads | Version |
+| :--- | :--- | :---: |  :---: | :---: | :---: |
+| [ChatNVIDIA](https://python.langchain.com/api_reference/nvidia_ai_endpoints/chat_models/langchain_nvidia_ai_endpoints.chat_models.ChatNVIDIA.html) | [langchain-nvidia-ai-endpoints](https://python.langchain.com/api_reference/nvidia_ai_endpoints/index.html) | beta | ❌ | ![PyPI - Downloads](https://img.shields.io/pypi/dm/langchain_nvidia_ai_endpoints?style=flat-square&label=%20) | ![PyPI - Version](https://img.shields.io/pypi/v/langchain_nvidia_ai_endpoints?style=flat-square&label=%20) |
 
 ### Model features
 
-| [Tool calling](/oss/python/langchain/tools) | [Structured output](/oss/python/langchain/structured-output) | JSON mode | [Image input](/oss/python/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](/oss/python/langchain/streaming/) | Native async | [Token usage](/oss/python/langchain/models#token-usage) | [Logprobs](/oss/python/langchain/models#log-probabilities) |
-| :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
-| ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ |
+| [Tool calling](/oss/python/langchain/tools) | [Structured output](/oss/python/langchain/structured-output) | [Image input](/oss/python/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](/oss/python/langchain/streaming/) | Native async | [Token usage](/oss/python/langchain/models#token-usage) | [Logprobs](/oss/python/langchain/models#log-probabilities) |
+| :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
+| ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ |
 
 ## Setup
 
@@ -57,7 +57,7 @@ if not os.getenv("NVIDIA_API_KEY"):
     os.environ["NVIDIA_API_KEY"] = getpass.getpass("Enter your NVIDIA API key: ")
 ```
 
-To enable automated tracing of your model calls, set your [LangSmith](https://docs.smith.langchain.com/) API key:
+To enable automated tracing of your model calls, set your [LangSmith](https://docs.langchain.com/langsmith/home) API key:
 
 ```python
 os.environ["LANGSMITH_TRACING"] = "true"
@@ -103,7 +103,7 @@ from langchain_nvidia_ai_endpoints import ChatNVIDIA
 llm = ChatNVIDIA(base_url="http://localhost:8000/v1", model="meta/llama3-8b-instruct")
 ```
 
-## Stream, Batch, and Async
+## Stream, batch, and async
 
 These models natively support streaming, and as is the case with all LangChain LLMs they expose a batch method to handle concurrent requests, as well as async methods for invoke, stream, and batch. Below are a few examples.
 
@@ -145,7 +145,7 @@ Some model types support unique prompting techniques and chat messages. We will 
 
 **To find out more about a specific model, please navigate to the API section of an AI Foundation model [as linked here](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/ai-foundation/models/codellama-13b/api).**
 
-### General Chat
+### General chat
 
 Models such as `meta/llama3-8b-instruct` and `mistralai/mixtral-8x22b-instruct-v0.1` are good all-around models that you can use for with any LangChain chat messages. Example below.
 
@@ -163,7 +163,7 @@ for txt in chain.stream({"input": "What's your name?"}):
     print(txt, end="")
 ```
 
-### Code Generation
+### Code generation
 
 These models accept the same arguments and input structure as regular chat models, but they tend to perform better on code-generation and structured code tasks. An example of this is `meta/codellama-70b`.
 
@@ -361,7 +361,9 @@ response = llm.invoke("What is the weather in Boston?")
 response.tool_calls
 ```
 
-See [How to use chat models to call tools](https://python.langchain.com/docs/how_to/tool_calling/) for additional examples.
+See [How to use chat models to call tools](/oss/python/langchain/tools) for additional examples.
+
+---
 
 ## API reference
 
@@ -370,8 +372,8 @@ For detailed documentation of all `ChatNVIDIA` features and configurations head 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/chat/nvidia_ai_endpoints.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/chat/nvidia_ai_endpoints.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

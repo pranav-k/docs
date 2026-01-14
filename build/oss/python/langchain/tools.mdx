@@ -2,17 +2,13 @@
 title: Tools
 ---
 
+Tools extend what [agents](/oss/python/langchain/agents) can do—letting them fetch real-time data, execute code, query external databases, and take actions in the world.
 
+Under the hood, tools are callable functions with well-defined inputs and outputs that get passed to a [chat model](/oss/python/langchain/models). The model decides when to invoke a tool based on the conversation context, and what input arguments to provide.
 
-Many AI applications interact with users via natural language. However, some use cases require models to interface directly with external systems—such as APIs, databases, or file systems—using structured input.
-
-Tools are components that [agents](/oss/python/langchain/agents) call to perform actions. They extend model capabilities by letting them interact with the world through well-defined inputs and outputs. Tools encapsulate a callable function and its input schema. These can be passed to compatible [chat models](/oss/python/langchain/models), allowing the model to decide whether to invoke a tool and with what arguments. In these scenarios, tool calling enables models to generate requests that conform to a specified input schema.
-
-<Note>
-**Server-side tool use**
-
-Some chat models (e.g., [OpenAI](/oss/python/integrations/chat/openai), [Anthropic](/oss/python/integrations/chat/anthropic), and [Gemini](/oss/python/integrations/chat/google_generative_ai)) feature [built-in tools](/oss/python/langchain/models#server-side-tool-use) that are executed server-side, such as web search and code interpreters. Refer to the [provider overview](/oss/python/integrations/providers/overview) to learn how to access these tools with your specific chat model.
-</Note>
+<Tip>
+    For details on how models handle tool calls, see [Tool calling](/oss/python/langchain/models#tool-calling).
+</Tip>
 
 ## Create tools
 
@@ -20,7 +16,7 @@ Some chat models (e.g., [OpenAI](/oss/python/integrations/chat/openai), [Anthrop
 
 The simplest way to create a tool is with the [`@tool`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.tool) decorator. By default, the function's docstring becomes the tool's description that helps the model understand when to use it:
 
-```python wrap
+```python
 from langchain.tools import tool
 
 @tool
@@ -39,13 +35,19 @@ Type hints are **required** as they define the tool's input schema. The docstrin
 
 
 
+<Note>
+    **Server-side tool use**
+
+    Some chat models (e.g., [OpenAI](/oss/python/integrations/chat/openai), [Anthropic](/oss/python/integrations/chat/anthropic), and [Gemini](/oss/python/integrations/chat/google_generative_ai)) feature [built-in tools](/oss/python/langchain/models#server-side-tool-use) that are executed server-side, such as web search and code interpreters. Refer to the [provider overview](/oss/python/integrations/providers/overview) to learn how to access these tools with your specific chat model.
+</Note>
+
 ### Customize tool properties
 
 #### Custom tool name
 
 By default, the tool name comes from the function name. Override it when you need something more descriptive:
 
-```python wrap
+```python
 @tool("web_search")  # Custom name
 def search(query: str) -> str:
     """Search the web for information."""
@@ -58,7 +60,7 @@ print(search.name)  # web_search
 
 Override the auto-generated tool description for clearer model guidance:
 
-```python wrap
+```python
 @tool("calculator", description="Performs arithmetic calculations. Use this for any math problems.")
 def calc(expression: str) -> str:
     """Evaluate mathematical expressions."""
@@ -70,7 +72,7 @@ def calc(expression: str) -> str:
 Define complex inputs with Pydantic models or JSON schemas:
 
 <CodeGroup>
-    ```python wrap Pydantic model
+    ```python Pydantic model
     from pydantic import BaseModel, Field
     from typing import Literal
 
@@ -96,7 +98,7 @@ Define complex inputs with Pydantic models or JSON schemas:
         return result
     ```
 
-    ```python wrap JSON Schema
+    ```python JSON Schema
     weather_schema = {
         "type": "object",
         "properties": {
@@ -118,35 +120,92 @@ Define complex inputs with Pydantic models or JSON schemas:
     ```
 </CodeGroup>
 
+### Reserved argument names
 
-## Accessing Context
+The following parameter names are reserved and cannot be used as tool arguments. Using these names will cause runtime errors.
+
+| Parameter name | Purpose |
+|----------------|---------|
+| `config` | Reserved for passing `RunnableConfig` to tools internally |
+| `runtime` | Reserved for `ToolRuntime` parameter (accessing state, context, store) |
+
+To access runtime information, use the [`ToolRuntime`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.ToolRuntime) parameter instead of naming your own arguments `config` or `runtime`.
+
+
+## Accessing context
 
 <Info>
 **Why this matters:** Tools are most powerful when they can access agent state, runtime context, and long-term memory. This enables tools to make context-aware decisions, personalize responses, and maintain information across conversations.
+
+Runtime context provides a way to inject dependencies (like database connections, user IDs, or configuration) into your tools at runtime, making them more testable and reusable.
+
+
+
 </Info>
 
 Tools can access runtime information through the `ToolRuntime` parameter, which provides:
 
-- **State** - Mutable data that flows through execution (messages, counters, custom fields)
+- **State** - Mutable data that flows through execution (e.g., messages, counters, custom fields)
 - **Context** - Immutable configuration like user IDs, session details, or application-specific configuration
 - **Store** - Persistent long-term memory across conversations
 - **Stream Writer** - Stream custom updates as tools execute
-- **Config** - RunnableConfig for the execution
+- **Config** - `RunnableConfig` for the execution
 - **Tool Call ID** - ID of the current tool call
 
-### ToolRuntime
+```mermaid
+graph LR
+    %% Runtime Context
+    subgraph "🔧 Tool Runtime Context"
+        A[Tool Call] --> B[ToolRuntime]
+        B --> C[State Access]
+        B --> D[Context Access]
+        B --> E[Store Access]
+        B --> F[Stream Writer]
+    end
+
+    %% Available Resources
+    subgraph "📊 Available Resources"
+        C --> G[Messages]
+        C --> H[Custom State]
+        D --> I[User ID]
+        D --> J[Session Info]
+        E --> K[Long-term Memory]
+        E --> L[User Preferences]
+    end
+
+    %% Tool Capabilities
+    subgraph "⚡ Enhanced Tool Capabilities"
+        M[Context-Aware Tools]
+        N[Stateful Tools]
+        O[Memory-Enabled Tools]
+        P[Streaming Tools]
+    end
+
+    %% Connections
+    G --> M
+    H --> N
+    I --> M
+    J --> M
+    K --> O
+    L --> O
+    F --> P
+```
+
+### `ToolRuntime`
 
 Use `ToolRuntime` to access all runtime information in a single parameter. Simply add `runtime: ToolRuntime` to your tool signature, and it will be automatically injected without being exposed to the LLM.
 
 <Info>
 **`ToolRuntime`**: A unified parameter that provides tools access to state, context, store, streaming, config, and tool call ID. This replaces the older pattern of using separate [`InjectedState`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.InjectedState), [`InjectedStore`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.InjectedStore), [`get_runtime`](https://reference.langchain.com/python/langgraph/runtime/#langgraph.runtime.get_runtime), and [`InjectedToolCallId`](https://reference.langchain.com/python/langchain/tools/#langchain.tools.InjectedToolCallId) annotations.
+
+The runtime automatically provides these capabilities to your tool functions without you having to pass them explicitly or use global state.
 </Info>
 
 **Accessing state:**
 
 Tools can access the current graph state using `ToolRuntime`:
 
-```python wrap
+```python
 from langchain.tools import tool, ToolRuntime
 
 # Access the current conversation state
@@ -175,14 +234,14 @@ def get_user_preference(
 ```
 
 <Warning>
-The `tool_runtime` parameter is hidden from the model. For the example above, the model only sees `pref_name` in the tool schema - `tool_runtime` is *not* included in the request.
+The `runtime` parameter is hidden from the model. For the example above, the model only sees `pref_name` in the tool schema - `runtime` is *not* included in the request.
 </Warning>
 
 **Updating state:**
 
 Use [`Command`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.Command) to update the agent's state or control the graph's execution flow:
 
-```python wrap
+```python
 from langgraph.types import Command
 from langchain.messages import RemoveMessage
 from langgraph.graph.message import REMOVE_ALL_MESSAGES
@@ -216,7 +275,7 @@ Access immutable configuration and contextual data like user IDs, session detail
 
 Tools can access runtime context through `ToolRuntime`:
 
-```python wrap
+```python
 from dataclasses import dataclass
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
@@ -275,7 +334,7 @@ Access persistent data across conversations using the store. The store is access
 
 Tools can access and update the store through `ToolRuntime`:
 
-```python wrap expandable
+```python expandable
 from typing import Any
 from langgraph.store.memory import InMemoryStore
 from langchain.agents import create_agent
@@ -323,11 +382,11 @@ agent.invoke({
 
 
 
-#### Stream Writer
+#### Stream writer
 
 Stream custom updates from tools as they execute using `runtime.stream_writer`. This is useful for providing real-time feedback to users about what a tool is doing.
 
-```python wrap
+```python
 from langchain.tools import tool, ToolRuntime
 
 @tool
@@ -349,8 +408,8 @@ If you use `runtime.stream_writer` inside your tool, the tool must be invoked wi
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/tools.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/tools.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

@@ -68,7 +68,6 @@ You can use custom TLS certificates to connect to model providers in the LangSmi
 
 To use custom TLS certificates, set the following environment variables. See the [self hosted deployment section](/langsmith/architectural-overview) for more information on how to configure application settings.
 
-* `LANGSMITH_PLAYGROUND_TLS_MODEL_PROVIDERS`: A comma-separated list of model providers that require custom TLS certificates. Note that `azure_openai`, `openai`, and `custom` are currently the only supported model providers, but more providers will be supported in the future.
 * [Optional] `LANGSMITH_PLAYGROUND_TLS_KEY`: The private key in PEM format. This must be a file path (for a mounted volume). This is usually only necessary for mutual TLS authentication.
 * [Optional] `LANGSMITH_PLAYGROUND_TLS_CERT`: The certificate in PEM format. This must be a file path (for a mounted volume). This is usually only necessary for mutual TLS authentication.
 * [Optional] `LANGSMITH_PLAYGROUND_TLS_CA`: The custom certificate authority (CA) certificate in PEM format. This must be a file path (for a mounted volume). Use this to mount CAs only if you're using a helm version below `0.11.9`; otherwise, use the [Mount internal CAs for TLS](./self-host-custom-tls-certificates#mount-internal-cas-for-tls) section above.
@@ -78,8 +77,8 @@ Once you have set these environment variables, enter the LangSmith Playground **
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/langsmith/self-host-custom-tls-certificates.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/self-host-custom-tls-certificates.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

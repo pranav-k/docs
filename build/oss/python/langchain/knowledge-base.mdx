@@ -3,8 +3,6 @@ title: Build a semantic search engine with LangChain
 sidebarTitle: Semantic search
 ---
 
-
-
 import EmbeddingsTabsPy from '/snippets/embeddings-tabs-py.mdx';
 import EmbeddingsTabsJS from '/snippets/embeddings-tabs-js.mdx';
 import VectorstoreTabsPy from '/snippets/vectorstore-tabs-py.mdx';
@@ -71,7 +69,7 @@ os.environ["LANGSMITH_API_KEY"] = getpass.getpass()
 
 
 
-## 1. Documents and Document Loaders
+## 1. Documents and document loaders
 
 LangChain implements a [Document](https://reference.langchain.com/python/langchain_core/documents/#langchain_core.documents.base.Document) abstraction, which is intended to represent a unit of text and associated metadata. It has three attributes:
 
@@ -118,7 +116,7 @@ docs = loader.load()
 
 print(len(docs))
 ```
-```output
+```text
 107
 ```
 
@@ -133,7 +131,7 @@ print(len(docs))
 print(f"{docs[0].page_content[:200]}\n")
 print(docs[0].metadata)
 ```
-```output
+```python
 Table of Contents
 UNITED STATES
 SECURITIES AND EXCHANGE COMMISSION
@@ -178,7 +176,7 @@ print(len(all_splits))
 
 
 
-```output
+```text
 514
 ```
 
@@ -202,7 +200,7 @@ print(vector_1[:10])
 
 
 
-```output
+```text
 Generated vectors of length 1536
 
 [-0.008586574345827103, -0.03341241180896759, -0.008936782367527485, -0.0036674530711025, 0.010564599186182022, 0.009598285891115665, -0.028587326407432556, -0.015824200585484505, 0.0030416189692914486, -0.012899317778646946]
@@ -233,7 +231,11 @@ Once we've instantiated a [`VectorStore`](https://reference.langchain.com/python
 - Synchronously and asynchronously;
 - By string query and by vector;
 - With and without returning similarity scores;
-- By similarity and @[maximum marginal relevance][VectorStore.max_marginal_relevance_search] (to balance similarity with query to diversity in retrieved results).
+- By similarity and [maximum marginal relevance](https://reference.langchain.com/python/langchain_core/vectorstores/?h=#langchain_core.vectorstores.base.VectorStore.max_marginal_relevance_search) (to balance similarity with query to diversity in retrieved results).
+
+
+
+
 
 The methods will generally include a list of [Document](https://reference.langchain.com/python/langchain_core/documents/#langchain_core.documents.base.Document) objects in their outputs.
 
@@ -250,7 +252,7 @@ results = vector_store.similarity_search(
 
 print(results[0])
 ```
-```output
+```python
 page_content='direct to consumer operations sell products through the following number of retail stores in the United States:
 U.S. RETAIL STORES NUMBER
 NIKE Brand factory stores 213
@@ -270,7 +272,7 @@ results = await vector_store.asimilarity_search("When was Nike incorporated?")
 
 print(results[0])
 ```
-```output
+```python
 page_content='Table of Contents
 PART I
 ITEM 1. BUSINESS
@@ -294,7 +296,7 @@ doc, score = results[0]
 print(f"Score: {score}\n")
 print(doc)
 ```
-```output
+```python
 Score: 0.23699893057346344
 
 page_content='Table of Contents
@@ -319,7 +321,7 @@ embedding = embeddings.embed_query("How were Nike's margins impacted in 2023?")
 results = vector_store.similarity_search_by_vector(embedding)
 print(results[0])
 ```
-```output
+```python
 page_content='Table of Contents
 GROSS MARGIN
 FISCAL 2023 COMPARED TO FISCAL 2022
@@ -345,7 +347,7 @@ Learn more:
 
 ## 4. Retrievers
 
-LangChain [`VectorStore`](https://reference.langchain.com/python/langchain_core/vectorstores/?h=#langchain_core.vectorstores.base.VectorStore) objects do not subclass @[Runnable]. LangChain @[Retrievers] are Runnables, so they implement a standard set of methods (e.g., synchronous and asynchronous `invoke` and `batch` operations). Although we can construct retrievers from vector stores, retrievers can interface with non-vector store sources of data, as well (such as external APIs).
+LangChain [`VectorStore`](https://reference.langchain.com/python/langchain_core/vectorstores/?h=#langchain_core.vectorstores.base.VectorStore) objects do not subclass [Runnable](https://reference.langchain.com/python/langchain_core/runnables/#langchain_core.runnables.Runnable). LangChain [Retrievers](https://reference.langchain.com/python/langchain_core/retrievers/#langchain_core.retrievers.BaseRetriever) are Runnables, so they implement a standard set of methods (e.g., synchronous and asynchronous `invoke` and `batch` operations). Although we can construct retrievers from vector stores, retrievers can interface with non-vector store sources of data, as well (such as external APIs).
 
 We can create a simple version of this ourselves, without subclassing `Retriever`. If we choose what method we wish to use to retrieve documents, we can create a runnable easily. Below we will build one around the `similarity_search` method:
 
@@ -372,7 +374,7 @@ retriever.batch(
 
 
 
-```output
+```text
 [[Document(metadata={'page': 4, 'source': '../example_data/nke-10k-2023.pdf', 'start_index': 3125}, page_content='direct to consumer operations sell products through the following number of retail stores in the United States:\nU.S. RETAIL STORES NUMBER\nNIKE Brand factory stores 213 \nNIKE Brand in-line stores (including employee-only stores) 74 \nConverse stores (including factory stores) 82 \nTOTAL 369 \nIn the United States, NIKE has eight significant distribution centers. Refer to Item 2. Properties for further information.\n2023 FORM 10-K 2')],
  [Document(metadata={'page': 3, 'source': '../example_data/nke-10k-2023.pdf', 'start_index': 0}, page_content='Table of Contents\nPART I\nITEM 1. BUSINESS\nGENERAL\nNIKE, Inc. was incorporated in 1967 under the laws of the State of Oregon. As used in this Annual Report on Form 10-K (this "Annual Report"), the terms "we," "us," "our,"\n"NIKE" and the "Company" refer to NIKE, Inc. and its predecessors, subsidiaries and affiliates, collectively, unless the context indicates otherwise.\nOur principal business activity is the design, development and worldwide marketing and selling of athletic footwear, apparel, equipment, accessories and services. NIKE is\nthe largest seller of athletic footwear and apparel in the world. We sell our products through NIKE Direct operations, which are comprised of both NIKE-owned retail stores\nand sales through our digital platforms (also referred to as "NIKE Brand Digital"), to retail accounts and to a mix of independent distributors, licensees and sales')]]
 ```
@@ -393,7 +395,7 @@ retriever.batch(
     ],
 )
 ```
-```output
+```text
 [[Document(metadata={'page': 4, 'source': '../example_data/nke-10k-2023.pdf', 'start_index': 3125}, page_content='direct to consumer operations sell products through the following number of retail stores in the United States:\nU.S. RETAIL STORES NUMBER\nNIKE Brand factory stores 213 \nNIKE Brand in-line stores (including employee-only stores) 74 \nConverse stores (including factory stores) 82 \nTOTAL 369 \nIn the United States, NIKE has eight significant distribution centers. Refer to Item 2. Properties for further information.\n2023 FORM 10-K 2')],
  [Document(metadata={'page': 3, 'source': '../example_data/nke-10k-2023.pdf', 'start_index': 0}, page_content='Table of Contents\nPART I\nITEM 1. BUSINESS\nGENERAL\nNIKE, Inc. was incorporated in 1967 under the laws of the State of Oregon. As used in this Annual Report on Form 10-K (this "Annual Report"), the terms "we," "us," "our,"\n"NIKE" and the "Company" refer to NIKE, Inc. and its predecessors, subsidiaries and affiliates, collectively, unless the context indicates otherwise.\nOur principal business activity is the design, development and worldwide marketing and selling of athletic footwear, apparel, equipment, accessories and services. NIKE is\nthe largest seller of athletic footwear and apparel in the world. We sell our products through NIKE Direct operations, which are comprised of both NIKE-owned retail stores\nand sales through our digital platforms (also referred to as "NIKE Brand Digital"), to retail accounts and to a mix of independent distributors, licensees and sales')]]
 ```
@@ -431,8 +433,8 @@ For more on RAG, see:
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/knowledge-base.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/knowledge-base.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

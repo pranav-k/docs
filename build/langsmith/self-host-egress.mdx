@@ -28,7 +28,7 @@ Generally, data that we send to Beacon can be categorized as follows:
 * Operational Metadata
   * This metadata will contain and collect the above subscription metrics to assist with remote support, allowing the LangChain team to diagnose and troubleshoot performance issues more effectively and proactively.
 
-## LangSmith Telemetry
+## LangSmith telemetry
 
 As of version ***0.11***, LangSmith deployments will by default send telemetry data back to our backend. All telemetry data is associated with an organization and deployment, but never identified with individual users. We ***do not collect PII*** (personally identifiable information) in any form.
 
@@ -42,7 +42,7 @@ As of version ***0.11***, LangSmith deployments will by default send telemetry d
 
 * **Request metadata**: anonymized request counts, sizes, and durations.
 * **Database metrics**: query durations, error rates, and performance counters.
-* **Distributed traces**: end-to-end traces with timing and error information for high-latency or failed requests.
+* **Operational LangSmith traces**: traces with timing and error information for high-latency or failed requests. These are **not** customer traces, these are operational traces about the functioning of the LangSmith instance.
 
 <Info>
 We do not collect actual payload contents, database records, or any data that can identify your end users or customers.
@@ -63,7 +63,7 @@ config:
 
 In an effort to maximize transparency, we provide sample payloads here:
 
-### License Verification
+### License verification
 
 **Endpoint:**
 
@@ -85,7 +85,7 @@ In an effort to maximize transparency, we provide sample payloads here:
 }
 ```
 
-### Usage Reporting
+### Usage reporting
 
 **Endpoint:**
 
@@ -123,7 +123,7 @@ In an effort to maximize transparency, we provide sample payloads here:
 }
 ```
 
-### Telemetry: Metrics
+### Telemetry: Operational LangSmith metrics
 
 **Endpoint:**
 
@@ -214,7 +214,7 @@ In an effort to maximize transparency, we provide sample payloads here:
 }
 ```
 
-### Telemetry: Traces
+### Telemetry: Operational LangSmith traces
 
 **Endpoint:**
 
@@ -299,15 +299,15 @@ In an effort to maximize transparency, we provide sample payloads here:
 }
 ```
 
-## Our Commitment
+## Our commitment
 
 LangChain will not store any sensitive information in the Subscription Metrics or Operational Metadata. Any data collected will not be shared with a third party. If you have any concerns about the data being sent, please reach out to your account team.
 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/langsmith/self-host-egress.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/self-host-egress.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

@@ -2,8 +2,6 @@
 title: Test
 ---
 
-
-
 Agentic applications let an LLM decide its own next steps to solve a problem. That flexibility is powerful, but the model's black-box nature makes it hard to predict how a tweak in one part of your agent will affect the rest. To build production-ready agents, thorough testing is essential.
 
 There are a few approaches to testing your agents:
@@ -14,9 +12,9 @@ There are a few approaches to testing your agents:
 
 Agentic applications tend to lean more on integration because they chain multiple components together and must deal with flakiness due to the nondeterministic nature of LLMs.
 
-## Unit Testing
+## Unit testing
 
-### Mocking Chat Model
+### Mocking chat model
 
 For logic not requiring API calls, you can use an in-memory stub for mocking responses.
 
@@ -41,7 +39,7 @@ model.invoke("hello, again!")
 # AIMessage(content='bar', ...)
 ```
 
-### InMemorySaver Checkpointer
+### InMemorySaver checkpointer
 
 To enable persistence during testing, you can use the [`InMemorySaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.memory.InMemorySaver) checkpointer. This allows you to simulate multiple turns to test state-dependent behavior:
 
@@ -62,7 +60,7 @@ agent.invoke(HumanMessage(content="What's my local time?"))
 ```
 
 
-## Integration Testing
+## Integration testing
 
 Many agent behaviors only emerge when using a real LLM, such as which tool the agent decides to call, how it formats responses, or whether a prompt modification affects the entire execution trajectory. LangChain's [`agentevals`](https://github.com/langchain-ai/agentevals) package provides evaluators specifically designed for testing agent trajectories with live models.
 
@@ -91,7 +89,7 @@ pip install agentevals
 
 Or, clone the [AgentEvals repository](https://github.com/langchain-ai/agentevals) directly.
 
-### Trajectory Match Evaluator
+### Trajectory match evaluator
 
 AgentEvals offers the `create_trajectory_match_evaluator` function to match your agent's trajectory against a reference trajectory. There are four modes to choose from:
 
@@ -282,7 +280,7 @@ You can also set the `tool_args_match_mode` property and/or `tool_args_match_ove
 
 </Info>
 
-### LLM-as-Judge Evaluator
+### LLM-as-Judge evaluator
 
 You can also use an LLM to evaluate the agent's execution path with the `create_trajectory_llm_as_judge` function. Unlike the trajectory match evaluators, it doesn't require a reference trajectory, but one can be provided if available.
 
@@ -336,7 +334,7 @@ evaluator = create_trajectory_llm_as_judge(
     model="openai:o3-mini",
     prompt=TRAJECTORY_ACCURACY_PROMPT_WITH_REFERENCE,
 )
-evaluation = judge_with_reference(
+evaluation = evaluator(
     outputs=result["messages"],
     reference_outputs=reference_trajectory,
 )
@@ -351,7 +349,7 @@ evaluation = judge_with_reference(
 For more configurability over how the LLM evaluates the trajectory, visit the [repository](https://github.com/langchain-ai/agentevals?tab=readme-ov-file#trajectory-llm-as-judge).
 </Info>
 
-### Async Support
+### Async support
 
 All `agentevals` evaluators support Python asyncio. For evaluators that use factory functions, async versions are available by adding `async` after `create_` in the function name.
 
@@ -383,7 +381,7 @@ async def test_async_evaluation():
 
 
 
-## LangSmith Integration
+## LangSmith integration
 
 For tracking experiments over time, you can log evaluator results to [LangSmith](https://smith.langchain.com/), a platform for building production-grade LLM applications that includes tracing, evaluation, and experimentation tools.
 
@@ -482,7 +480,7 @@ To learn more about evaluating your agent, see the [LangSmith docs](/langsmith/p
 
 
 
-## Recording & Replaying HTTP Calls
+## Recording & replaying HTTP calls
 
 Integration tests that call real LLM APIs can be slow and expensive, especially when run frequently in CI/CD pipelines. We recommend using a library for recording HTTP requests and responses, then replaying them in subsequent runs without making actual network calls.
 
@@ -547,8 +545,8 @@ When you modify prompts, add new tools, or change expected trajectories, your sa
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

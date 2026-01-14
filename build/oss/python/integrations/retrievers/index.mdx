@@ -7,7 +7,7 @@ It is more general than a vector store.
 A retriever does not need to be able to store documents, only to return (or retrieve) them.
 Retrievers can be created from vector stores, but are also broad enough to include [Wikipedia search](/oss/python/integrations/retrievers/wikipedia/) and [Amazon Kendra](/oss/python/integrations/retrievers/amazon_kendra_retriever/).
 
-Retrievers accept a string query as input and return a list of [Documents](https://python.langchain.com/api_reference/core/documents/langchain_core.documents.base.Document.html) as output.
+Retrievers accept a string query as input and return a list of [`Document`](https://reference.langchain.com/python/langchain_core/documents/#langchain_core.documents.base.Document) objects as output.
 
 Note that all [vector stores](/oss/python/integrations/vectorstores) can be cast to retrievers. Refer to the vector store [integration docs](/oss/python/integrations/vectorstores/) for available vector stores.
 This page lists custom retrievers, implemented via subclassing BaseRetriever.
@@ -36,8 +36,6 @@ The below retrievers will search over an external index (e.g., constructed from 
 
 
 ## All retrievers
-
-> **Note:** The descriptions in the table below are truncated for readability.
 
 <Columns cols={3}>
 <Card title="Activeloop Deep Memory" icon="link" href="/oss/python/integrations/retrievers/activeloop" arrow="true" cta="View guide" />
@@ -103,15 +101,14 @@ The below retrievers will search over an external index (e.g., constructed from 
 <Card title="You.com" icon="link" href="/oss/python/integrations/retrievers/you-retriever" arrow="true" cta="View guide" />
 <Card title="Zep Cloud" icon="link" href="/oss/python/integrations/retrievers/zep_cloud_memorystore" arrow="true" cta="View guide" />
 <Card title="Zep Open Source" icon="link" href="/oss/python/integrations/retrievers/zep_memorystore" arrow="true" cta="View guide" />
-<Card title="Zilliz Cloud Pipeline" icon="link" href="/oss/python/integrations/retrievers/zilliz_cloud_pipeline" arrow="true" cta="View guide" />
 <Card title="Zotero" icon="link" href="/oss/python/integrations/retrievers/zotero" arrow="true" cta="View guide" />
 </Columns>
 
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/index.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

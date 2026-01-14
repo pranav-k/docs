@@ -16,16 +16,8 @@ First, you need to install `httpx` and `gql` Python packages.
 pip install httpx gql > /dev/null
 ```
 
-```output
-Note: you may need to restart the kernel to use updated packages.
-```
-
 ```python
 pip install -qU  langchain-community
-```
-
-```output
-Note: you may need to restart the kernel to use updated packages.
 ```
 
 Now, let's create a BaseGraphQLTool instance with the specified Star Wars API endpoint and initialize an Agent with the tool.
@@ -88,7 +80,7 @@ for step in agent.stream(
     step["messages"][-1].pretty_print()
 ```
 
-```output
+```text
 ================================ Human Message =================================
 
 Search for the titles of all the stawars films stored in the graphql database that has this schema allFilms {
@@ -139,8 +131,8 @@ If you would like more information about any of these films, please let me know!
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/graphql.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/graphql.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>

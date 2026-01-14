@@ -2,8 +2,6 @@
 title: Test
 ---
 
-
-
 Agentic applications let an LLM decide its own next steps to solve a problem. That flexibility is powerful, but the model's black-box nature makes it hard to predict how a tweak in one part of your agent will affect the rest. To build production-ready agents, thorough testing is essential.
 
 There are a few approaches to testing your agents:
@@ -16,7 +14,7 @@ Agentic applications tend to lean more on integration because they chain multipl
 
 
 
-## Integration Testing
+## Integration testing
 
 Many agent behaviors only emerge when using a real LLM, such as which tool the agent decides to call, how it formats responses, or whether a prompt modification affects the entire execution trajectory. LangChain's [`agentevals`](https://github.com/langchain-ai/agentevals) package provides evaluators specifically designed for testing agent trajectories with live models.
 
@@ -45,7 +43,7 @@ npm install agentevals @langchain/core
 
 Or, clone the [AgentEvals repository](https://github.com/langchain-ai/agentevals) directly.
 
-### Trajectory Match Evaluator
+### Trajectory match evaluator
 
 
 AgentEvals offers the `createTrajectoryMatchEvaluator` function to match your agent's trajectory against a reference trajectory. There are four modes to choose from:
@@ -297,7 +295,7 @@ You can also set the `toolArgsMatchMode` property and/or `toolArgsMatchOverrides
 
 </Info>
 
-### LLM-as-Judge Evaluator
+### LLM-as-Judge evaluator
 
 
 You can also use an LLM to evaluate the agent's execution path with the `createTrajectoryLLMAsJudge` function. Unlike the trajectory match evaluators, it doesn't require a reference trajectory, but one can be provided if available.
@@ -381,7 +379,7 @@ For more configurability over how the LLM evaluates the trajectory, visit the [r
 
 
 
-## LangSmith Integration
+## LangSmith integration
 
 For tracking experiments over time, you can log evaluator results to [LangSmith](https://smith.langchain.com/), a platform for building production-grade LLM applications that includes tracing, evaluation, and experimentation tools.
 
@@ -499,8 +497,8 @@ To learn more about evaluating your agent, see the [LangSmith docs](/langsmith/v
 ---
 
 <Callout icon="pen-to-square" iconType="regular">
-    [Edit the source of this page on GitHub.](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test.mdx)
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
 </Callout>
 <Tip icon="terminal" iconType="regular">
-    [Connect these docs programmatically](/use-these-docs) to Claude, VSCode, and more via MCP for    real-time answers.
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Tip>
