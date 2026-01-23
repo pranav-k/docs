@@ -35,13 +35,14 @@ The below example shows how this works with a simple, linear graph that progress
 import { test, expect } from 'vitest';
 import {
   StateGraph,
+  StateSchema,
   START,
   END,
   MemorySaver,
 } from '@langchain/langgraph';
-import { z } from "zod/v4";
+import * as z from "zod";
 
-const State = z.object({
+const State = new StateSchema({
   my_key: z.string(),
 });
 
@@ -80,10 +81,11 @@ import {
   START,
   END,
   MemorySaver,
+  StateSchema,
 } from '@langchain/langgraph';
-import { z } from "zod/v4";
+import * as z from "zod";
 
-const State = z.object({
+const State = new StateSchema({
   my_key: z.string(),
 });
 
@@ -130,13 +132,14 @@ Here's an example that executes only the second and third nodes in a linear grap
 import { test, expect } from 'vitest';
 import {
   StateGraph,
+  StateSchema,
   START,
   END,
   MemorySaver,
 } from '@langchain/langgraph';
-import { z } from "zod/v4";
+import * as z from "zod";
 
-const State = z.object({
+const State = new StateSchema({
   my_key: z.string(),
 });
 

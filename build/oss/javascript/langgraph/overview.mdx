@@ -12,7 +12,7 @@ We will commonly use [LangChain](/oss/javascript/langchain/overview) components 
 
 LangGraph is focused on the underlying capabilities important for agent orchestration: durable execution, streaming, human-in-the-loop, and more.
 
-## <Icon icon="download" size={20} /> install
+## <Icon icon="download" size={20} /> Install
 
 
 
@@ -40,13 +40,17 @@ Then, create a simple hello world example:
 
 
 ```typescript
-import { MessagesAnnotation, StateGraph, START, END } from "@langchain/langgraph";
+import { StateSchema, MessagesValue, GraphNode, StateGraph, START, END } from "@langchain/langgraph";
 
-const mockLlm = (state: typeof MessagesAnnotation.State) => {
+const State = new StateSchema({
+  messages: MessagesValue,
+});
+
+const mockLlm: GraphNode<typeof State> = (state) => {
   return { messages: [{ role: "ai", content: "hello world" }] };
 };
 
-const graph = new StateGraph(MessagesAnnotation)
+const graph = new StateGraph(State)
   .addNode("mock_llm", mockLlm)
   .addEdge(START, "mock_llm")
   .addEdge("mock_llm", END)

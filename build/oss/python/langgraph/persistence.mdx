@@ -80,8 +80,6 @@ graph.invoke({"foo": "", "bar":[]}, config)
 
 
 
-
-
 After we run the graph, we expect to see exactly 4 checkpoints:
 
 * Empty checkpoint with [`START`](https://reference.langchain.com/python/langgraph/constants/#langgraph.constants.START) as the next node to be executed
@@ -342,9 +340,15 @@ The attributes it has are:
 
 * `value`: The value (itself a dictionary) of this memory
 * `key`: A unique key for this memory in this namespace
-* `namespace`: A list of strings, the namespace of this memory type
+* `namespace`: A tuple of strings, the namespace of this memory type
+
+    <Note>
+    While the type is `tuple[str, ...]`, it may be serialized as a list when converted to JSON (for example, `['1', 'memories']`).
+    </Note>
+    
 * `created_at`: Timestamp for when this memory was created
 * `updated_at`: Timestamp for when this memory was updated
+
 
 
 
@@ -547,6 +551,7 @@ Under the hood, checkpointing is powered by checkpointer objects that conform to
 * `langgraph-checkpoint`: The base interface for checkpointer savers ([`BaseCheckpointSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.base.BaseCheckpointSaver)) and serialization/deserialization interface ([`SerializerProtocol`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.serde.base.SerializerProtocol)). Includes in-memory checkpointer implementation ([`InMemorySaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.memory.InMemorySaver)) for experimentation. LangGraph comes with `langgraph-checkpoint` included.
 * `langgraph-checkpoint-sqlite`: An implementation of LangGraph checkpointer that uses SQLite database ([`SqliteSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.sqlite.SqliteSaver) / [`AsyncSqliteSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.sqlite.aio.AsyncSqliteSaver)). Ideal for experimentation and local workflows. Needs to be installed separately.
 * `langgraph-checkpoint-postgres`: An advanced checkpointer that uses Postgres database ([`PostgresSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.postgres.PostgresSaver) / [`AsyncPostgresSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.postgres.aio.AsyncPostgresSaver)), used in LangSmith. Ideal for using in production. Needs to be installed separately.
+* `langgraph-checkpoint-cosmosdb`: An implementation of LangGraph checkpointer that uses Azure Cosmos DB (@[`CosmosDBSaver`] / @[`AsyncCosmosDBSaver`]). Ideal for using in production with Azure. Supports both sync and async operations. Needs to be installed separately.
 
 
 
@@ -616,8 +621,6 @@ checkpointer.setup()
 ```
 
 When running on LangSmith, encryption is automatically enabled whenever `LANGGRAPH_AES_KEY` is present, so you only need to provide the environment variable. Other encryption schemes can be used by implementing [`CipherProtocol`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.serde.base.CipherProtocol) and supplying it to [`EncryptedSerializer`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.serde.encrypted.EncryptedSerializer).
-
-
 
 
 ## Capabilities

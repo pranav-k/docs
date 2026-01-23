@@ -190,6 +190,8 @@ In some cases, you may want to bypass a reducer and directly overwrite a state v
 </Tip>
 
 
+
+
 ### Working with messages in graph state
 
 #### Why use messages?
@@ -302,7 +304,7 @@ builder.add_node("node_with_config", node_with_config)
 
 
 
-Behind the scenes, functions are converted to [`RunnableLambda`](https://python.langchain.com/api_reference/core/runnables/langchain_core.runnables.base.RunnableLambda.html), which add batch and async support to your function, along with native tracing and debugging.
+Behind the scenes, functions are converted to [`RunnableLambda`](https://reference.langchain.com/python/langchain_core/runnables/#langchain_core.runnables.base.RunnableLambda), which add batch and async support to your function, along with native tracing and debugging.
 
 If you add a node to a graph without specifying a name, it will be given a default name equivalent to the function name.
 
@@ -518,15 +520,30 @@ def my_node(state: State) -> Command[Literal["my_other_node"]]:
         return Command(update={"foo": "baz"}, goto="my_other_node")
 ```
 
+Note that [`Command`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.Command) only adds dynamic edges, while static edges will still execute. In other words, [`Command`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.Command) doesn't override static edges.
 
+```python
+def node_a(state: State) -> Command[Literal["my_other_node"]]:
+   if state["foo"] == "bar":
+       return Command(update={"foo": "baz"}, goto="my_other_node")
 
+# Add a static edge from "node_a" to "node_b"
+graph.add_edge("node_a", "node_b")
 
+# Command will NOT prevent "node_a" from going to "node_b"
+```
+
+In the example above, **"node_a"** will go to both **"node_b"** and **"my_other_node"**.
 
 <Note>
 
 When returning [`Command`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.Command) in your node functions, you must add return type annotations with the list of node names the node is routing to, e.g. `Command[Literal["my_other_node"]]`. This is necessary for the graph rendering and tells LangGraph that `my_node` can navigate to `my_other_node`.
 
 </Note>
+
+
+
+
 
 Check out this [how-to guide](/oss/python/langgraph/use-graph-api#combine-control-flow-and-state-updates-with-command) for an end-to-end example of how to use [`Command`](https://reference.langchain.com/python/langgraph/types/#langgraph.types.Command).
 

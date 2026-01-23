@@ -829,7 +829,7 @@ for (const interrupt of interrupts) {
   if (actionRequest.name === "send_email") {
     // Edit email
     const editedAction = { ...actionRequest };
-    editedAction.arguments.subject = "Mockups reminder";
+    editedAction.args.subject = "Mockups reminder";
     resume[interrupt.id] = {
       decisions: [{ type: "edit", editedAction }]
     };
@@ -968,7 +968,7 @@ const scheduleEvent = tool(
 **Important:** Make sure sub-agent prompts emphasize that their final message should contain all relevant information. A common failure mode is sub-agents that perform tool calls but don't include the results in their final response.
 
 <Tip>
-For a complete working example that demonstrates the full supervisor pattern with human-in-the-loop review and advanced information flow control, check out [`supervisor_complete.ts`](https://github.com/langchain-ai/langchainjs/blob/main/examples/src/createAgent/supervisor_complete.ts) in the LangChain.js examples.
+For a complete working example that demonstrates the full supervisor pattern with human-in-the-loop review and advanced information flow control, check out [`supervisor_complete.ts`](https://github.com/langchain-ai/langchainjs/blob/main/examples/src/createAgent/supervisor.ts) in the LangChain.js examples.
 </Tip>
 
 

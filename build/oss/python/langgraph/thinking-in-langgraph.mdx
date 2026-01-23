@@ -230,6 +230,7 @@ class EmailAgentState(TypedDict):
 
 
 
+
 Notice that the state contains only raw data – no prompt templates, no formatted strings, no instructions. The classification output is stored as a single dictionary, straight from the LLM.
 
 ## Step 4: Build your nodes
@@ -449,7 +450,6 @@ We'll implement each node as a simple function. Remember: nodes take state, do w
             goto="draft_response"
         )
     ```
-
 
 
 

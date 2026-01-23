@@ -20,10 +20,7 @@ To leverage durable execution in LangGraph, you need to:
 1. Enable [persistence](/oss/python/langgraph/persistence) in your workflow by specifying a [checkpointer](/oss/python/langgraph/persistence#checkpointer-libraries) that will save workflow progress.
 2. Specify a [thread identifier](/oss/python/langgraph/persistence#threads) when executing a workflow. This will track the execution history for a particular instance of the workflow.
 
-1. Wrap any non-deterministic operations (e.g., random number generation) or operations with side effects (e.g., file writes, API calls) inside [`task`](https://reference.langchain.com/python/langgraph/func/#langgraph.func.task) to ensure that when a workflow is resumed, these operations are not repeated for the particular run, and instead their results are retrieved from the persistence layer. For more information, see [Determinism and Consistent Replay](#determinism-and-consistent-replay).
-
-
-
+1. Wrap any non-deterministic operations (e.g., random number generation) or operations with side effects (e.g., file writes, API calls) inside [tasks](https://reference.langchain.com/python/langgraph/func/#langgraph.func.task) to ensure that when a workflow is resumed, these operations are not repeated for the particular run, and instead their results are retrieved from the persistence layer. For more information, see [Determinism and Consistent Replay](#determinism-and-consistent-replay).
 
 ## Determinism and consistent replay
 
@@ -39,9 +36,6 @@ To ensure that your workflow is deterministic and can be consistently replayed, 
 
 For some examples of pitfalls to avoid, see the [Common Pitfalls](/oss/python/langgraph/functional-api#common-pitfalls) section in the functional API, which shows
 how to structure your code using **tasks** to avoid these issues. The same principles apply to the [StateGraph (Graph API)](https://reference.langchain.com/python/langgraph/graphs/#langgraph.graph.state.StateGraph).
-
-
-
 
 ## Durability modes
 
@@ -181,7 +175,7 @@ Once you have enabled durable execution in your workflow, you can resume executi
 
 ## Starting points for resuming workflows
 
-* If you're using a [StateGraph (Graph API)](https://reference.langchain.com/python/langgraph/graphs/#langgraph.graph.state.StateGraph), the starting point is the beginning of the [**node**](/oss/python/langgraph/graph-api#nodes) where execution stopped.
+* If you're using a [StateGraph (Graph API)](/oss/python/langgraph/graph-api), the starting point is the beginning of the [**node**](/oss/python/langgraph/graph-api#nodes) where execution stopped.
 * If you're making a subgraph call inside a node, the starting point will be the **parent** node that called the subgraph that was halted.
   Inside the subgraph, the starting point will be the specific [**node**](/oss/python/langgraph/graph-api#nodes) where execution stopped.
 * If you're using the Functional API, the starting point is the beginning of the [**entrypoint**](/oss/python/langgraph/functional-api#entrypoint) where execution stopped.
